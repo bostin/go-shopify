@@ -10,12 +10,7 @@ The new home of Conversio's Shopify Go library.
 ## Supported Go Versions
 
 This library has been tested against the following versions of Go
-* 1.10
-* 1.11
-* 1.12
-* 1.13
-* 1.14
-* 1.15
+* 1.19
 
 ## Install
 
