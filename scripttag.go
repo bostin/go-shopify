@@ -27,37 +27,37 @@ type ScriptTagServiceOp struct {
 
 // ScriptTag represents a Shopify ScriptTag.
 type ScriptTag struct {
-	CreatedAt    *time.Time `json:"created_at"`
-	Event        string     `json:"event"`
-	ID           int64      `json:"id"`
-	Src          string     `json:"src"`
-	DisplayScope string     `json:"display_scope"`
-	UpdatedAt    *time.Time `json:"updated_at"`
+	CreatedAt    *time.Time `json:"created_at" bson:"created_at"`
+	Event        string     `json:"event" bson:"event"`
+	ID           int64      `json:"id" bson:"id"`
+	Src          string     `json:"src" bson:"src"`
+	DisplayScope string     `json:"display_scope" bson:"display_scope"`
+	UpdatedAt    *time.Time `json:"updated_at" bson:"updated_at"`
 }
 
 // The options provided by Shopify.
 type ScriptTagOption struct {
-	Limit        int       `url:"limit,omitempty"`
-	Page         int       `url:"page,omitempty"`
-	SinceID      int64     `url:"since_id,omitempty"`
-	CreatedAtMin time.Time `url:"created_at_min,omitempty"`
-	CreatedAtMax time.Time `url:"created_at_max,omitempty"`
-	UpdatedAtMin time.Time `url:"updated_at_min,omitempty"`
-	UpdatedAtMax time.Time `url:"updated_at_max,omitempty"`
-	Src          string    `url:"src,omitempty"`
-	Fields       string    `url:"fields,omitempty"`
+	Limit        int       `url:"limit,omitempty" bson:"limit,omitempty"`
+	Page         int       `url:"page,omitempty" bson:"page,omitempty"`
+	SinceID      int64     `url:"since_id,omitempty" bson:"since_id,omitempty"`
+	CreatedAtMin time.Time `url:"created_at_min,omitempty" bson:"created_at_min,omitempty"`
+	CreatedAtMax time.Time `url:"created_at_max,omitempty" bson:"created_at_max,omitempty"`
+	UpdatedAtMin time.Time `url:"updated_at_min,omitempty" bson:"updated_at_min,omitempty"`
+	UpdatedAtMax time.Time `url:"updated_at_max,omitempty" bson:"updated_at_max,omitempty"`
+	Src          string    `url:"src,omitempty" bson:"src,omitempty"`
+	Fields       string    `url:"fields,omitempty" bson:"fields,omitempty"`
 }
 
 // ScriptTagsResource represents the result from the admin/script_tags.json
 // endpoint.
 type ScriptTagsResource struct {
-	ScriptTags []ScriptTag `json:"script_tags"`
+	ScriptTags []ScriptTag `json:"script_tags" bson:"script_tags"`
 }
 
 // ScriptTagResource represents the result from the
 // admin/script_tags/{#script_tag_id}.json endpoint.
 type ScriptTagResource struct {
-	ScriptTag *ScriptTag `json:"script_tag"`
+	ScriptTag *ScriptTag `json:"script_tag" bson:"script_tag"`
 }
 
 // List script tags

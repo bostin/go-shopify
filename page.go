@@ -32,27 +32,27 @@ type PageServiceOp struct {
 
 // Page represents a Shopify page.
 type Page struct {
-	ID             int64       `json:"id,omitempty"`
-	Author         string      `json:"author,omitempty"`
-	Handle         string      `json:"handle,omitempty"`
-	Title          string      `json:"title,omitempty"`
-	CreatedAt      *time.Time  `json:"created_at,omitempty"`
-	UpdatedAt      *time.Time  `json:"updated_at,omitempty"`
-	BodyHTML       string      `json:"body_html,omitempty"`
-	TemplateSuffix string      `json:"template_suffix,omitempty"`
-	PublishedAt    *time.Time  `json:"published_at,omitempty"`
-	ShopID         int64       `json:"shop_id,omitempty"`
-	Metafields     []Metafield `json:"metafields,omitempty"`
+	ID             int64       `json:"id,omitempty" bson:"id,omitempty"`
+	Author         string      `json:"author,omitempty" bson:"author,omitempty"`
+	Handle         string      `json:"handle,omitempty" bson:"handle,omitempty"`
+	Title          string      `json:"title,omitempty" bson:"title,omitempty"`
+	CreatedAt      *time.Time  `json:"created_at,omitempty" bson:"created_at,omitempty"`
+	UpdatedAt      *time.Time  `json:"updated_at,omitempty" bson:"updated_at,omitempty"`
+	BodyHTML       string      `json:"body_html,omitempty" bson:"body_html,omitempty"`
+	TemplateSuffix string      `json:"template_suffix,omitempty" bson:"template_suffix,omitempty"`
+	PublishedAt    *time.Time  `json:"published_at,omitempty" bson:"published_at,omitempty"`
+	ShopID         int64       `json:"shop_id,omitempty" bson:"shop_id,omitempty"`
+	Metafields     []Metafield `json:"metafields,omitempty" bson:"metafields,omitempty"`
 }
 
 // PageResource represents the result from the pages/X.json endpoint
 type PageResource struct {
-	Page *Page `json:"page"`
+	Page *Page `json:"page" bson:"page"`
 }
 
 // PagesResource represents the result from the pages.json endpoint
 type PagesResource struct {
-	Pages []Page `json:"pages"`
+	Pages []Page `json:"pages" bson:"pages"`
 }
 
 // List pages

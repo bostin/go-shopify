@@ -25,32 +25,32 @@ type AssetServiceOp struct {
 
 // Asset represents a Shopify asset
 type Asset struct {
-	Attachment  string     `json:"attachment"`
-	ContentType string     `json:"content_type"`
-	Key         string     `json:"key"`
-	PublicURL   string     `json:"public_url"`
-	Size        int        `json:"size"`
-	SourceKey   string     `json:"source_key"`
-	Src         string     `json:"src"`
-	ThemeID     int64      `json:"theme_id"`
-	Value       string     `json:"value"`
-	CreatedAt   *time.Time `json:"created_at"`
-	UpdatedAt   *time.Time `json:"updated_at"`
+	Attachment  string     `json:"attachment" bson:"attachment"`
+	ContentType string     `json:"content_type" bson:"content_type"`
+	Key         string     `json:"key" bson:"key"`
+	PublicURL   string     `json:"public_url" bson:"public_url"`
+	Size        int        `json:"size" bson:"size"`
+	SourceKey   string     `json:"source_key" bson:"source_key"`
+	Src         string     `json:"src" bson:"src"`
+	ThemeID     int64      `json:"theme_id" bson:"theme_id"`
+	Value       string     `json:"value" bson:"value"`
+	CreatedAt   *time.Time `json:"created_at" bson:"created_at"`
+	UpdatedAt   *time.Time `json:"updated_at" bson:"updated_at"`
 }
 
 // AssetResource is the result from the themes/x/assets.json?asset[key]= endpoint
 type AssetResource struct {
-	Asset *Asset `json:"asset"`
+	Asset *Asset `json:"asset" bson:"asset"`
 }
 
 // AssetsResource is the result from the themes/x/assets.json endpoint
 type AssetsResource struct {
-	Assets []Asset `json:"assets"`
+	Assets []Asset `json:"assets" bson:"assets"`
 }
 
 type assetGetOptions struct {
-	Key     string `url:"asset[key]"`
-	ThemeID int64  `url:"theme_id"`
+	Key     string `url:"asset[key]" bson:"key"`
+	ThemeID int64  `url:"theme_id" bson:"theme_id"`
 }
 
 // List the metadata for all assets in the given theme

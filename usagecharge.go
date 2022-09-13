@@ -27,14 +27,14 @@ type UsageChargeServiceOp struct {
 
 // UsageCharge represents a Shopify UsageCharge.
 type UsageCharge struct {
-	BalanceRemaining *decimal.Decimal `json:"balance_remaining,omitempty"`
-	BalanceUsed      *decimal.Decimal `json:"balance_used,omitempty"`
-	BillingOn        *time.Time       `json:"billing_on,omitempty"`
-	CreatedAt        *time.Time       `json:"created_at,omitempty"`
-	Description      string           `json:"description,omitempty"`
-	ID               int64            `json:"id,omitempty"`
-	Price            *decimal.Decimal `json:"price,omitempty"`
-	RiskLevel        *decimal.Decimal `json:"risk_level,omitempty"`
+	BalanceRemaining *decimal.Decimal `json:"balance_remaining,omitempty" bson:"balance_remaining,omitempty"`
+	BalanceUsed      *decimal.Decimal `json:"balance_used,omitempty" bson:"balance_used,omitempty"`
+	BillingOn        *time.Time       `json:"billing_on,omitempty" bson:"billing_on,omitempty"`
+	CreatedAt        *time.Time       `json:"created_at,omitempty" bson:"created_at,omitempty"`
+	Description      string           `json:"description,omitempty" bson:"description,omitempty"`
+	ID               int64            `json:"id,omitempty" bson:"id,omitempty"`
+	Price            *decimal.Decimal `json:"price,omitempty" bson:"price,omitempty"`
+	RiskLevel        *decimal.Decimal `json:"risk_level,omitempty" bson:"risk_level,omitempty"`
 }
 
 func (r *UsageCharge) UnmarshalJSON(data []byte) error {
@@ -44,7 +44,7 @@ func (r *UsageCharge) UnmarshalJSON(data []byte) error {
 	// http://choly.ca/post/go-json-marshalling/
 	type alias UsageCharge
 	aux := &struct {
-		BillingOn *string `json:"billing_on"`
+		BillingOn *string `json:"billing_on" bson:"billing_on"`
 		*alias
 	}{alias: (*alias)(r)}
 
@@ -60,13 +60,13 @@ func (r *UsageCharge) UnmarshalJSON(data []byte) error {
 // UsageChargeResource represents the result from the
 // /admin/recurring_application_charges/X/usage_charges/X.json endpoints
 type UsageChargeResource struct {
-	Charge *UsageCharge `json:"usage_charge"`
+	Charge *UsageCharge `json:"usage_charge" bson:"usage_charge"`
 }
 
 // UsageChargesResource represents the result from the
 // admin/recurring_application_charges/X/usage_charges.json endpoint.
 type UsageChargesResource struct {
-	Charges []UsageCharge `json:"usage_charges"`
+	Charges []UsageCharge `json:"usage_charges" bson:"usage_charges"`
 }
 
 // Create creates new usage charge given a recurring charge. *required fields: price and description

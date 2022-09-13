@@ -9,6 +9,11 @@ import (
 
 const inventoryItemsBasePath = "inventory_items"
 
+type InventoryItemListOptions struct {
+	Ids   *string `json:"ids" url:"ids,omitempty"`
+	Limit *int    `json:"limit" url:"limit,omitempty"`
+}
+
 // InventoryItemService is an interface for interacting with the
 // inventory items endpoints of the Shopify API
 // See https://help.shopify.com/en/api/reference/inventory/inventoryitem
@@ -25,23 +30,24 @@ type InventoryItemServiceOp struct {
 
 // InventoryItem represents a Shopify inventory item
 type InventoryItem struct {
-	ID                int64            `json:"id,omitempty"`
-	SKU               string           `json:"sku,omitempty"`
-	CreatedAt         *time.Time       `json:"created_at,omitempty"`
-	UpdatedAt         *time.Time       `json:"updated_at,omitempty"`
-	Cost              *decimal.Decimal `json:"cost,omitempty"`
-	Tracked           *bool            `json:"tracked,omitempty"`
-	AdminGraphqlAPIID string           `json:"admin_graphql_api_id,omitempty"`
+	ID                int64            `json:"id,omitempty" bson:"id,omitempty"`
+	SKU               string           `json:"sku,omitempty" bson:"sku,omitempty"`
+	CreatedAt         *time.Time       `json:"created_at,omitempty" bson:"created_at,omitempty"`
+	UpdatedAt         *time.Time       `json:"updated_at,omitempty" bson:"updated_at,omitempty"`
+	Cost              *decimal.Decimal `json:"cost,omitempty" bson:"cost,omitempty"`
+	Tracked           *bool            `json:"tracked,omitempty" bson:"tracked,omitempty"`
+	RequiresShipping  *bool            `json:"requires_shipping,omitempty" bson:"requires_shipping,omitempty"`
+	AdminGraphqlAPIID string           `json:"admin_graphql_api_id,omitempty" bson:"admin_graphql_api_id,omitempty"`
 }
 
 // InventoryItemResource is used for handling single item requests and responses
 type InventoryItemResource struct {
-	InventoryItem *InventoryItem `json:"inventory_item"`
+	InventoryItem *InventoryItem `json:"inventory_item" bson:"inventory_item"`
 }
 
-// InventoryItemsResource is used for handling multiple item responsees
+// InventoryItemsResource is used for handling multiple item responses
 type InventoryItemsResource struct {
-	InventoryItems []InventoryItem `json:"inventory_items"`
+	InventoryItems []InventoryItem `json:"inventory_items" bson:"inventory_items"`
 }
 
 // List inventory items

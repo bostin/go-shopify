@@ -26,22 +26,22 @@ type DiscountCodeServiceOp struct {
 
 // PriceRuleDiscountCode represents a Shopify Discount Code
 type PriceRuleDiscountCode struct {
-	ID          int64      `json:"id,omitempty"`
-	PriceRuleID int64      `json:"price_rule_id,omitempty"`
-	Code        string     `json:"code,omitempty"`
-	UsageCount  int        `json:"usage_count,omitempty"`
-	CreatedAt   *time.Time `json:"created_at,omitempty"`
-	UpdatedAt   *time.Time `json:"updated_at,omitempty"`
+	ID          int64      `json:"id,omitempty" bson:"id,omitempty"`
+	PriceRuleID int64      `json:"price_rule_id,omitempty" bson:"price_rule_id,omitempty"`
+	Code        string     `json:"code,omitempty" bson:"code,omitempty"`
+	UsageCount  int        `json:"usage_count,omitempty" bson:"usage_count,omitempty"`
+	CreatedAt   *time.Time `json:"created_at,omitempty" bson:"created_at,omitempty"`
+	UpdatedAt   *time.Time `json:"updated_at,omitempty" bson:"updated_at,omitempty"`
 }
 
 // DiscountCodesResource is the result from the discount_codes.json endpoint
 type DiscountCodesResource struct {
-	DiscountCodes []PriceRuleDiscountCode `json:"discount_codes"`
+	DiscountCodes []PriceRuleDiscountCode `json:"discount_codes" bson:"discount_codes"`
 }
 
 // DiscountCodeResource represents the result from the discount_codes/X.json endpoint
 type DiscountCodeResource struct {
-	PriceRuleDiscountCode *PriceRuleDiscountCode `json:"discount_code"`
+	PriceRuleDiscountCode *PriceRuleDiscountCode `json:"discount_code" bson:"discount_code"`
 }
 
 // Create a discount code

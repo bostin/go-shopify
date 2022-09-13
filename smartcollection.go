@@ -8,6 +8,30 @@ import (
 const smartCollectionsBasePath = "smart_collections"
 const smartCollectionsResourceName = "collections"
 
+type SmartCollectionCountOptions struct {
+	ProductId       *int       `json:"product_id,omitempty"  url:"product_id,omitempty"`
+	PublishedAtMax  *time.Time `json:"published_at_max,omitempty"  url:"published_at_max,omitempty"`
+	PublishedAtMin  *time.Time `json:"published_at_min,omitempty"  url:"published_at_min,omitempty"`
+	PublishedStatus *string    `json:"published_status,omitempty"  url:"published_status,omitempty"`
+	Title           *string    `json:"title,omitempty"  url:"title,omitempty"`
+	UpdatedAtMax    *time.Time `json:"updated_at_max"  url:"updated_at_max,omitempty"`
+	UpdatedAtMin    *time.Time `json:"updated_at_min"  url:"updated_at_min,omitempty"`
+}
+type SmartCollectionListOptions struct {
+	Fields          *string    `json:"fields,omitempty" url:"fields,omitempty"`
+	Handle          *string    `json:"handle,omitempty" url:"handle,omitempty"`
+	Ids             *string    `json:"ids,omitempty" url:"ids,omitempty"`
+	Limit           *int       `json:"limit,omitempty" url:"limit,omitempty"`
+	ProductId       *int       `json:"product_id,omitempty" url:"product_id,omitempty"`
+	PublishedAtMax  *time.Time `json:"published_at_max,omitempty" url:"published_at_max,omitempty"`
+	PublishedAtMin  *time.Time `json:"published_at_min,omitempty" url:"published_at_min,omitempty"`
+	PublishedStatus *string    `json:"published_status,omitempty" url:"published_status,omitempty"`
+	SinceId         *int64     `json:"since_id,omitempty" url:"since_id,omitempty"`
+	Title           *string    `json:"title,omitempty" url:"title,omitempty"`
+	UpdatedAtMax    *time.Time `json:"updated_at_max,omitempty" url:"updated_at_max,omitempty"`
+	UpdatedAtMin    *time.Time `json:"updated_at_min,omitempty" url:"updated_at_min,omitempty"`
+}
+
 // SmartCollectionService is an interface for interacting with the smart
 // collection endpoints of the Shopify API.
 // See https://help.shopify.com/api/reference/smartcollection
@@ -30,37 +54,37 @@ type SmartCollectionServiceOp struct {
 }
 
 type Rule struct {
-	Column    string `json:"column"`
-	Relation  string `json:"relation"`
-	Condition string `json:"condition"`
+	Column    string `json:"column" bson:"column"`
+	Relation  string `json:"relation" bson:"relation"`
+	Condition string `json:"condition" bson:"condition"`
 }
 
 // SmartCollection represents a Shopify smart collection.
 type SmartCollection struct {
-	ID             int64       `json:"id"`
-	Handle         string      `json:"handle"`
-	Title          string      `json:"title"`
-	UpdatedAt      *time.Time  `json:"updated_at"`
-	BodyHTML       string      `json:"body_html"`
-	SortOrder      string      `json:"sort_order"`
-	TemplateSuffix string      `json:"template_suffix"`
-	Image          Image       `json:"image"`
-	Published      bool        `json:"published"`
-	PublishedAt    *time.Time  `json:"published_at"`
-	PublishedScope string      `json:"published_scope"`
-	Rules          []Rule      `json:"rules"`
-	Disjunctive    bool        `json:"disjunctive"`
-	Metafields     []Metafield `json:"metafields,omitempty"`
+	ID             int64       `json:"id" bson:"id"`
+	Handle         string      `json:"handle" bson:"handle"`
+	Title          string      `json:"title" bson:"title"`
+	UpdatedAt      *time.Time  `json:"updated_at" bson:"updated_at"`
+	BodyHTML       string      `json:"body_html" bson:"body_html"`
+	SortOrder      string      `json:"sort_order" bson:"sort_order"`
+	TemplateSuffix string      `json:"template_suffix" bson:"template_suffix"`
+	Image          Image       `json:"image" bson:"image"`
+	Published      bool        `json:"published" bson:"published"`
+	PublishedAt    *time.Time  `json:"published_at" bson:"published_at"`
+	PublishedScope string      `json:"published_scope" bson:"published_scope"`
+	Rules          []Rule      `json:"rules" bson:"rules"`
+	Disjunctive    bool        `json:"disjunctive" bson:"disjunctive"`
+	Metafields     []Metafield `json:"metafields,omitempty" bson:"metafields"`
 }
 
 // SmartCollectionResource represents the result from the smart_collections/X.json endpoint
 type SmartCollectionResource struct {
-	Collection *SmartCollection `json:"smart_collection"`
+	Collection *SmartCollection `json:"smart_collection" bson:"smart_collection"`
 }
 
 // SmartCollectionsResource represents the result from the smart_collections.json endpoint
 type SmartCollectionsResource struct {
-	Collections []SmartCollection `json:"smart_collections"`
+	Collections []SmartCollection `json:"smart_collections" bson:"smart_collections"`
 }
 
 // List smart collections

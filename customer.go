@@ -36,51 +36,51 @@ type CustomerServiceOp struct {
 
 // Customer represents a Shopify customer
 type Customer struct {
-	ID                  int64              `json:"id,omitempty"`
-	Email               string             `json:"email,omitempty"`
-	FirstName           string             `json:"first_name,omitempty"`
-	LastName            string             `json:"last_name,omitempty"`
-	State               string             `json:"state,omitempty"`
-	Note                string             `json:"note,omitempty"`
-	VerifiedEmail       bool               `json:"verified_email,omitempty"`
-	MultipassIdentifier string             `json:"multipass_identifier,omitempty"`
-	OrdersCount         int                `json:"orders_count,omitempty"`
-	TaxExempt           bool               `json:"tax_exempt,omitempty"`
-	TotalSpent          *decimal.Decimal   `json:"total_spent,omitempty"`
-	Phone               string             `json:"phone,omitempty"`
-	Tags                string             `json:"tags,omitempty"`
-	LastOrderId         int64              `json:"last_order_id,omitempty"`
-	LastOrderName       string             `json:"last_order_name,omitempty"`
-	AcceptsMarketing    bool               `json:"accepts_marketing,omitempty"`
-	DefaultAddress      *CustomerAddress   `json:"default_address,omitempty"`
-	Addresses           []*CustomerAddress `json:"addresses,omitempty"`
-	CreatedAt           *time.Time         `json:"created_at,omitempty"`
-	UpdatedAt           *time.Time         `json:"updated_at,omitempty"`
-	Metafields          []Metafield        `json:"metafields,omitempty"`
+	ID                  int64              `json:"id,omitempty" bson:"id,omitempty"`
+	Email               string             `json:"email,omitempty" bson:"email,omitempty"`
+	FirstName           string             `json:"first_name,omitempty" bson:"first_name,omitempty"`
+	LastName            string             `json:"last_name,omitempty" bson:"last_name,omitempty"`
+	State               string             `json:"state,omitempty" bson:"state,omitempty"`
+	Note                string             `json:"note,omitempty" bson:"note,omitempty"`
+	VerifiedEmail       bool               `json:"verified_email,omitempty" bson:"verified_email,omitempty"`
+	MultipassIdentifier string             `json:"multipass_identifier,omitempty" bson:"multipass_identifier,omitempty"`
+	OrdersCount         int                `json:"orders_count,omitempty" bson:"orders_count,omitempty"`
+	TaxExempt           bool               `json:"tax_exempt,omitempty" bson:"tax_exempt,omitempty"`
+	TotalSpent          *decimal.Decimal   `json:"total_spent,omitempty" bson:"total_spent,omitempty"`
+	Phone               string             `json:"phone,omitempty" bson:"phone,omitempty"`
+	Tags                string             `json:"tags,omitempty" bson:"tags,omitempty"`
+	LastOrderId         int64              `json:"last_order_id,omitempty" bson:"last_order_id,omitempty"`
+	LastOrderName       string             `json:"last_order_name,omitempty" bson:"last_order_name,omitempty"`
+	AcceptsMarketing    bool               `json:"accepts_marketing,omitempty" bson:"accepts_marketing,omitempty"`
+	DefaultAddress      *CustomerAddress   `json:"default_address,omitempty" bson:"default_address,omitempty"`
+	Addresses           []*CustomerAddress `json:"addresses,omitempty" bson:"addresses,omitempty"`
+	CreatedAt           *time.Time         `json:"created_at,omitempty" bson:"created_at,omitempty"`
+	UpdatedAt           *time.Time         `json:"updated_at,omitempty" bson:"updated_at,omitempty"`
+	Metafields          []Metafield        `json:"metafields,omitempty" bson:"metafields,omitempty"`
 }
 
 // Represents the result from the customers/X.json endpoint
 type CustomerResource struct {
-	Customer *Customer `json:"customer"`
+	Customer *Customer `json:"customer" bson:"customer"`
 }
 
 // Represents the result from the customers.json endpoint
 type CustomersResource struct {
-	Customers []Customer `json:"customers"`
+	Customers []Customer `json:"customers" bson:"customers"`
 }
 
 // Represents the result from the customers/tags.json endpoint
 type CustomerTagsResource struct {
-	Tags []string `json:"tags"`
+	Tags []string `json:"tags" bson:"tags"`
 }
 
 // Represents the options available when searching for a customer
 type CustomerSearchOptions struct {
-	Page   int    `url:"page,omitempty"`
-	Limit  int    `url:"limit,omitempty"`
-	Fields string `url:"fields,omitempty"`
-	Order  string `url:"order,omitempty"`
-	Query  string `url:"query,omitempty"`
+	Page   int    `url:"page,omitempty" bson:"page,omitempty"`
+	Limit  int    `url:"limit,omitempty" bson:"limit,omitempty"`
+	Fields string `url:"fields,omitempty" bson:"fields,omitempty"`
+	Order  string `url:"order,omitempty" bson:"order,omitempty"`
+	Query  string `url:"query,omitempty" bson:"query,omitempty"`
 }
 
 // List customers

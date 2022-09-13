@@ -24,30 +24,30 @@ type ApplicationChargeServiceOp struct {
 }
 
 type ApplicationCharge struct {
-	ID                 int64            `json:"id"`
-	Name               string           `json:"name"`
-	APIClientID        int64            `json:"api_client_id"`
-	Price              *decimal.Decimal `json:"price"`
-	Status             string           `json:"status"`
-	ReturnURL          string           `json:"return_url"`
-	Test               *bool            `json:"test"`
-	CreatedAt          *time.Time       `json:"created_at"`
-	UpdatedAt          *time.Time       `json:"updated_at"`
-	ChargeType         *string          `json:"charge_type"`
-	DecoratedReturnURL string           `json:"decorated_return_url"`
-	ConfirmationURL    string           `json:"confirmation_url"`
+	ID                 int64            `json:"id" bson:"id"`
+	Name               string           `json:"name" bson:"name"`
+	APIClientID        int64            `json:"api_client_id" bson:"api_client_id"`
+	Price              *decimal.Decimal `json:"price" bson:"price"`
+	Status             string           `json:"status" bson:"status"`
+	ReturnURL          string           `json:"return_url" bson:"return_url"`
+	Test               *bool            `json:"test" bson:"test"`
+	CreatedAt          *time.Time       `json:"created_at" bson:"created_at"`
+	UpdatedAt          *time.Time       `json:"updated_at" bson:"updated_at"`
+	ChargeType         *string          `json:"charge_type" bson:"charge_type"`
+	DecoratedReturnURL string           `json:"decorated_return_url" bson:"decorated_return_url"`
+	ConfirmationURL    string           `json:"confirmation_url" bson:"confirmation_url"`
 }
 
 // ApplicationChargeResource represents the result from the
 // admin/application_charges{/X{/activate.json}.json}.json endpoints.
 type ApplicationChargeResource struct {
-	Charge *ApplicationCharge `json:"application_charge"`
+	Charge *ApplicationCharge `json:"application_charge" bson:"application_charge"`
 }
 
 // ApplicationChargesResource represents the result from the
 // admin/application_charges.json endpoint.
 type ApplicationChargesResource struct {
-	Charges []ApplicationCharge `json:"application_charges"`
+	Charges []ApplicationCharge `json:"application_charges" bson:"application_charges"`
 }
 
 // Create creates new application charge.

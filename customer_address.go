@@ -23,33 +23,33 @@ type CustomerAddressServiceOp struct {
 
 // CustomerAddress represents a Shopify customer address
 type CustomerAddress struct {
-	ID           int64  `json:"id,omitempty"`
-	CustomerID   int64  `json:"customer_id,omitempty"`
-	FirstName    string `json:"first_name,omitempty"`
-	LastName     string `json:"last_name,omitempty"`
-	Company      string `json:"company,omitempty"`
-	Address1     string `json:"address1,omitempty"`
-	Address2     string `json:"address2,omitempty"`
-	City         string `json:"city,omitempty"`
-	Province     string `json:"province,omitempty"`
-	Country      string `json:"country,omitempty"`
-	Zip          string `json:"zip,omitempty"`
-	Phone        string `json:"phone,omitempty"`
-	Name         string `json:"name,omitempty"`
-	ProvinceCode string `json:"province_code,omitempty"`
-	CountryCode  string `json:"country_code,omitempty"`
-	CountryName  string `json:"country_name,omitempty"`
-	Default      bool   `json:"default,omitempty"`
+	ID           int64  `json:"id,omitempty" bson:"id,omitempty"`
+	CustomerID   int64  `json:"customer_id,omitempty" bson:"customer_id,omitempty"`
+	FirstName    string `json:"first_name,omitempty" bson:"first_name,omitempty"`
+	LastName     string `json:"last_name,omitempty" bson:"last_name,omitempty"`
+	Company      string `json:"company,omitempty" bson:"company,omitempty"`
+	Address1     string `json:"address1,omitempty" bson:"address1,omitempty"`
+	Address2     string `json:"address2,omitempty" bson:"address2,omitempty"`
+	City         string `json:"city,omitempty" bson:"city,omitempty"`
+	Province     string `json:"province,omitempty" bson:"province,omitempty"`
+	Country      string `json:"country,omitempty" bson:"country,omitempty"`
+	Zip          string `json:"zip,omitempty" bson:"zip,omitempty"`
+	Phone        string `json:"phone,omitempty" bson:"phone,omitempty"`
+	Name         string `json:"name,omitempty" bson:"name,omitempty"`
+	ProvinceCode string `json:"province_code,omitempty" bson:"province_code,omitempty"`
+	CountryCode  string `json:"country_code,omitempty" bson:"country_code,omitempty"`
+	CountryName  string `json:"country_name,omitempty" bson:"country_name,omitempty"`
+	Default      bool   `json:"default,omitempty" bson:"default,omitempty"`
 }
 
 // CustomerAddressResoruce represents the result from the addresses/X.json endpoint
 type CustomerAddressResource struct {
-	Address *CustomerAddress `json:"customer_address"`
+	Address *CustomerAddress `json:"customer_address" bson:"customer_address"`
 }
 
 // CustomerAddressResoruce represents the result from the customers/X/addresses.json endpoint
 type CustomerAddressesResource struct {
-	Addresses []CustomerAddress `json:"addresses"`
+	Addresses []CustomerAddress `json:"addresses" bson:"addresses"`
 }
 
 // List addresses

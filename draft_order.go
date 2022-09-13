@@ -37,84 +37,84 @@ type DraftOrderServiceOp struct {
 
 // DraftOrder represents a shopify draft order
 type DraftOrder struct {
-	ID              int64            `json:"id,omitempty"`
-	OrderID         int64            `json:"order_id,omitempty"`
-	Name            string           `json:"name,omitempty"`
-	Customer        *Customer        `json:"customer,omitempty"`
-	ShippingAddress *Address         `json:"shipping_address,omitempty"`
-	BillingAddress  *Address         `json:"billing_address,omitempty"`
-	Note            string           `json:"note,omitempty"`
-	NoteAttributes  []NoteAttribute  `json:"note_attribute,omitempty"`
-	Email           string           `json:"email,omitempty"`
-	Currency        string           `json:"currency,omitempty"`
-	InvoiceSentAt   *time.Time       `json:"invoice_sent_at,omitempty"`
-	InvoiceURL      string           `json:"invoice_url,omitempty"`
-	LineItems       []LineItem       `json:"line_items,omitempty"`
-	ShippingLine    *ShippingLines   `json:"shipping_line,omitempty"`
-	Tags            string           `json:"tags,omitempty"`
-	TaxLines        []TaxLine        `json:"tax_lines,omitempty"`
-	AppliedDiscount *AppliedDiscount `json:"applied_discount,omitempty"`
-	TaxesIncluded   bool             `json:"taxes_included,omitempty"`
-	TotalTax        string           `json:"total_tax,omitempty"`
-	TotalPrice      string           `json:"total_price,omitempty"`
-	SubtotalPrice   *decimal.Decimal `json:"subtotal_price,omitempty"`
-	CompletedAt     *time.Time       `json:"completed_at,omitempty"`
-	CreatedAt       *time.Time       `json:"created_at,omitempty"`
-	UpdatedAt       *time.Time       `json:"updated_at,omitempty"`
-	Status          string           `json:"status,omitempty"`
+	ID              int64            `json:"id,omitempty" bson:"id,omitempty"`
+	OrderID         int64            `json:"order_id,omitempty" bson:"order_id,omitempty"`
+	Name            string           `json:"name,omitempty" bson:"name,omitempty"`
+	Customer        *Customer        `json:"customer,omitempty" bson:"customer,omitempty"`
+	ShippingAddress *Address         `json:"shipping_address,omitempty" bson:"shipping_address,omitempty"`
+	BillingAddress  *Address         `json:"billing_address,omitempty" bson:"billing_address,omitempty"`
+	Note            string           `json:"note,omitempty" bson:"note,omitempty"`
+	NoteAttributes  []NoteAttribute  `json:"note_attribute,omitempty" bson:"note_attributes,omitempty"`
+	Email           string           `json:"email,omitempty" bson:"email,omitempty"`
+	Currency        string           `json:"currency,omitempty" bson:"currency,omitempty"`
+	InvoiceSentAt   *time.Time       `json:"invoice_sent_at,omitempty" bson:"invoice_sent_at,omitempty"`
+	InvoiceURL      string           `json:"invoice_url,omitempty" bson:"invoice_url,omitempty"`
+	LineItems       []LineItem       `json:"line_items,omitempty" bson:"line_items,omitempty"`
+	ShippingLine    *ShippingLines   `json:"shipping_line,omitempty" bson:"shipping_line,omitempty"`
+	Tags            string           `json:"tags,omitempty" bson:"tags,omitempty"`
+	TaxLines        []TaxLine        `json:"tax_lines,omitempty" bson:"tax_lines,omitempty"`
+	AppliedDiscount *AppliedDiscount `json:"applied_discount,omitempty" bson:"applied_discount,omitempty"`
+	TaxesIncluded   bool             `json:"taxes_included,omitempty" bson:"taxes_included,omitempty"`
+	TotalTax        string           `json:"total_tax,omitempty" bson:"total_tax,omitempty"`
+	TotalPrice      string           `json:"total_price,omitempty" bson:"total_price,omitempty"`
+	SubtotalPrice   *decimal.Decimal `json:"subtotal_price,omitempty" bson:"subtotal_price,omitempty"`
+	CompletedAt     *time.Time       `json:"completed_at,omitempty" bson:"completed_at,omitempty"`
+	CreatedAt       *time.Time       `json:"created_at,omitempty" bson:"created_at,omitempty"`
+	UpdatedAt       *time.Time       `json:"updated_at,omitempty" bson:"updated_at,omitempty"`
+	Status          string           `json:"status,omitempty" bson:"status,omitempty"`
 	// only in request to flag using the customer's default address
-	UseCustomerDefaultAddress bool `json:"use_customer_default_address,omitempty"`
+	UseCustomerDefaultAddress bool `json:"use_customer_default_address,omitempty" bson:"use_customer_default_address,omitempty"`
 }
 
 // AppliedDiscount is the discount applied to the line item or the draft order object.
 type AppliedDiscount struct {
-	Title       string `json:"applied_discount,omitempty"`
-	Description string `json:"description,omitempty"`
-	Value       string `json:"value,omitempty"`
-	ValueType   string `json:"value_type,omitempty"`
-	Amount      string `json:"amount,omitempty"`
+	Title       string `json:"applied_discount,omitempty" bson:"applied_discount,omitempty"`
+	Description string `json:"description,omitempty" bson:"description,omitempty"`
+	Value       string `json:"value,omitempty" bson:"value,omitempty"`
+	ValueType   string `json:"value_type,omitempty" bson:"value_type,omitempty"`
+	Amount      string `json:"amount,omitempty" bson:"amount,omitempty"`
 }
 
 // DraftOrderInvoice is the struct used to create an invoice for a draft order
 type DraftOrderInvoice struct {
-	To            string   `json:"to,omitempty"`
-	From          string   `json:"from,omitempty"`
-	Subject       string   `json:"subject,omitempty"`
-	CustomMessage string   `json:"custom_message,omitempty"`
-	Bcc           []string `json:"bcc,omitempty"`
+	To            string   `json:"to,omitempty" bson:"to,omitempty"`
+	From          string   `json:"from,omitempty" bson:"from,omitempty"`
+	Subject       string   `json:"subject,omitempty" bson:"subject,omitempty"`
+	CustomMessage string   `json:"custom_message,omitempty" bson:"custom_message,omitempty"`
+	Bcc           []string `json:"bcc,omitempty" bson:"bcc,omitempty"`
 }
 
 type DraftOrdersResource struct {
-	DraftOrders []DraftOrder `json:"draft_orders"`
+	DraftOrders []DraftOrder `json:"draft_orders" bson:"draft_orders"`
 }
 
 type DraftOrderResource struct {
-	DraftOrder *DraftOrder `json:"draft_order"`
+	DraftOrder *DraftOrder `json:"draft_order" bson:"draft_order"`
 }
 
 type DraftOrderInvoiceResource struct {
-	DraftOrderInvoice *DraftOrderInvoice `json:"draft_order_invoice,omitempty"`
+	DraftOrderInvoice *DraftOrderInvoice `json:"draft_order_invoice,omitempty" bson:"draft_order_invoice,omitempty"`
 }
 
 // DraftOrderListOptions represents the possible options that can be used
 // to further query the list draft orders endpoint
 type DraftOrderListOptions struct {
-	Fields       string     `url:"fields,omitempty"`
-	Limit        int        `url:"limit,omitempty"`
-	SinceID      int64      `url:"since_id,omitempty"`
-	UpdatedAtMin *time.Time `url:"updated_at_min,omitempty"`
-	UpdatedAtMax *time.Time `url:"updated_at_max,omitempty"`
-	IDs          string     `url:"ids,omitempty"`
-	Status       string     `url:"status,omitempty"`
+	Fields       string     `url:"fields,omitempty" bson:"fields,omitempty"`
+	Limit        int        `url:"limit,omitempty" bson:"limit,omitempty"`
+	SinceID      int64      `url:"since_id,omitempty" bson:"since_id,omitempty"`
+	UpdatedAtMin *time.Time `url:"updated_at_min,omitempty" bson:"updated_at_min,omitempty"`
+	UpdatedAtMax *time.Time `url:"updated_at_max,omitempty" bson:"updated_at_max,omitempty"`
+	IDs          string     `url:"ids,omitempty" bson:"ids,omitempty"`
+	Status       string     `url:"status,omitempty" bson:"status,omitempty"`
 }
 
 // DraftOrderCountOptions represents the possible options to the count draft orders endpoint
 type DraftOrderCountOptions struct {
-	Fields  string `url:"fields,omitempty"`
-	Limit   int    `url:"limit,omitempty"`
-	SinceID int64  `url:"since_id,omitempty"`
-	IDs     string `url:"ids,omitempty"`
-	Status  string `url:"status,omitempty"`
+	Fields  string `url:"fields,omitempty" bson:"fields,omitempty"`
+	Limit   int    `url:"limit,omitempty" bson:"limit,omitempty"`
+	SinceID int64  `url:"since_id,omitempty" bson:"since_id,omitempty"`
+	IDs     string `url:"ids,omitempty" bson:"ids,omitempty"`
+	Status  string `url:"status,omitempty" bson:"status,omitempty"`
 }
 
 // Create draft order

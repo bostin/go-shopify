@@ -30,28 +30,28 @@ type RecurringApplicationChargeServiceOp struct {
 
 // RecurringApplicationCharge represents a Shopify RecurringApplicationCharge.
 type RecurringApplicationCharge struct {
-	APIClientID           int64            `json:"api_client_id"`
-	ActivatedOn           *time.Time       `json:"activated_on"`
-	BalanceRemaining      *decimal.Decimal `json:"balance_remaining"`
-	BalanceUsed           *decimal.Decimal `json:"balance_used"`
-	BillingOn             *time.Time       `json:"billing_on"`
-	CancelledOn           *time.Time       `json:"cancelled_on"`
-	CappedAmount          *decimal.Decimal `json:"capped_amount"`
-	ConfirmationURL       string           `json:"confirmation_url"`
-	CreatedAt             *time.Time       `json:"created_at"`
-	DecoratedReturnURL    string           `json:"decorated_return_url"`
-	ID                    int64            `json:"id"`
-	Name                  string           `json:"name"`
-	Price                 *decimal.Decimal `json:"price"`
-	ReturnURL             string           `json:"return_url"`
-	RiskLevel             *decimal.Decimal `json:"risk_level"`
-	Status                string           `json:"status"`
-	Terms                 string           `json:"terms"`
-	Test                  *bool            `json:"test"`
-	TrialDays             int              `json:"trial_days"`
-	TrialEndsOn           *time.Time       `json:"trial_ends_on"`
-	UpdateCappedAmountURL string           `json:"update_capped_amount_url"`
-	UpdatedAt             *time.Time       `json:"updated_at"`
+	APIClientID           int64            `json:"api_client_id" bson:"api_client_id"`
+	ActivatedOn           *time.Time       `json:"activated_on" bson:"activated_on"`
+	BalanceRemaining      *decimal.Decimal `json:"balance_remaining" bson:"balance_remaining"`
+	BalanceUsed           *decimal.Decimal `json:"balance_used" bson:"balance_used"`
+	BillingOn             *time.Time       `json:"billing_on" bson:"billing_on"`
+	CancelledOn           *time.Time       `json:"cancelled_on" bson:"cancelled_on"`
+	CappedAmount          *decimal.Decimal `json:"capped_amount" bson:"capped_amount"`
+	ConfirmationURL       string           `json:"confirmation_url" bson:"confirmation_url"`
+	CreatedAt             *time.Time       `json:"created_at" bson:"created_at"`
+	DecoratedReturnURL    string           `json:"decorated_return_url" bson:"decorated_return_url"`
+	ID                    int64            `json:"id" bson:"id"`
+	Name                  string           `json:"name" bson:"name"`
+	Price                 *decimal.Decimal `json:"price" bson:"price"`
+	ReturnURL             string           `json:"return_url" bson:"return_url"`
+	RiskLevel             *decimal.Decimal `json:"risk_level" bson:"risk_level"`
+	Status                string           `json:"status" bson:"status"`
+	Terms                 string           `json:"terms" bson:"terms"`
+	Test                  *bool            `json:"test" bson:"test"`
+	TrialDays             int              `json:"trial_days" bson:"trial_days"`
+	TrialEndsOn           *time.Time       `json:"trial_ends_on" bson:"trial_ends_on"`
+	UpdateCappedAmountURL string           `json:"update_capped_amount_url" bson:"update_capped_amount_url"`
+	UpdatedAt             *time.Time       `json:"updated_at" bson:"updated_at"`
 }
 
 func parse(dest **time.Time, data *string) error {
@@ -79,12 +79,12 @@ func (r *RecurringApplicationCharge) UnmarshalJSON(data []byte) error {
 	// http://choly.ca/post/go-json-marshalling/
 	type alias RecurringApplicationCharge
 	aux := &struct {
-		ActivatedOn *string `json:"activated_on"`
-		BillingOn   *string `json:"billing_on"`
-		CancelledOn *string `json:"cancelled_on"`
-		CreatedAt   *string `json:"created_at"`
-		TrialEndsOn *string `json:"trial_ends_on"`
-		UpdatedAt   *string `json:"updated_at"`
+		ActivatedOn *string `json:"activated_on" bson:"activated_on"`
+		BillingOn   *string `json:"billing_on" bson:"billing_on"`
+		CancelledOn *string `json:"cancelled_on" bson:"cancelled_on"`
+		CreatedAt   *string `json:"created_at" bson:"created_at"`
+		TrialEndsOn *string `json:"trial_ends_on" bson:"trial_ends_on"`
+		UpdatedAt   *string `json:"updated_at" bson:"updated_at"`
 		*alias
 	}{alias: (*alias)(r)}
 
@@ -115,13 +115,13 @@ func (r *RecurringApplicationCharge) UnmarshalJSON(data []byte) error {
 // RecurringApplicationChargeResource represents the result from the
 // admin/recurring_application_charges{/X{/activate.json}.json}.json endpoints.
 type RecurringApplicationChargeResource struct {
-	Charge *RecurringApplicationCharge `json:"recurring_application_charge"`
+	Charge *RecurringApplicationCharge `json:"recurring_application_charge" bson:"recurring_application_charge"`
 }
 
 // RecurringApplicationChargesResource represents the result from the
 // admin/recurring_application_charges.json endpoint.
 type RecurringApplicationChargesResource struct {
-	Charges []RecurringApplicationCharge `json:"recurring_application_charges"`
+	Charges []RecurringApplicationCharge `json:"recurring_application_charges" bson:"recurring_application_charges"`
 }
 
 // Create creates new recurring application charge.

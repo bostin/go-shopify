@@ -27,30 +27,30 @@ type WebhookServiceOp struct {
 
 // Webhook represents a Shopify webhook
 type Webhook struct {
-	ID                  int64      `json:"id"`
-	Address             string     `json:"address"`
-	Topic               string     `json:"topic"`
-	Format              string     `json:"format"`
-	CreatedAt           *time.Time `json:"created_at,omitempty"`
-	UpdatedAt           *time.Time `json:"updated_at,omitempty"`
-	Fields              []string   `json:"fields"`
-	MetafieldNamespaces []string   `json:"metafield_namespaces"`
+	ID                  int64      `json:"id" bson:"id"`
+	Address             string     `json:"address" bson:"address"`
+	Topic               string     `json:"topic" bson:"topic"`
+	Format              string     `json:"format" bson:"format"`
+	CreatedAt           *time.Time `json:"created_at,omitempty" bson:"created_at"`
+	UpdatedAt           *time.Time `json:"updated_at,omitempty" bson:"updated_at"`
+	Fields              []string   `json:"fields" bson:"fields"`
+	MetafieldNamespaces []string   `json:"metafield_namespaces" bson:"metafield_namespaces"`
 }
 
 // WebhookOptions can be used for filtering webhooks on a List request.
 type WebhookOptions struct {
-	Address string `url:"address,omitempty"`
-	Topic   string `url:"topic,omitempty"`
+	Address string `url:"address,omitempty" bson:"address,omitempty"`
+	Topic   string `url:"topic,omitempty" bson:"topic,omitempty"`
 }
 
 // WebhookResource represents the result from the admin/webhooks.json endpoint
 type WebhookResource struct {
-	Webhook *Webhook `json:"webhook"`
+	Webhook *Webhook `json:"webhook" bson:"webhook"`
 }
 
 // WebhooksResource is the root object for a webhook get request.
 type WebhooksResource struct {
-	Webhooks []Webhook `json:"webhooks"`
+	Webhooks []Webhook `json:"webhooks" bson:"webhooks"`
 }
 
 // List webhooks

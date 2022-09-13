@@ -39,28 +39,28 @@ type MetafieldServiceOp struct {
 
 // Metafield represents a Shopify metafield.
 type Metafield struct {
-	ID                int64       `json:"id,omitempty"`
-	Key               string      `json:"key,omitempty"`
-	Value             interface{} `json:"value,omitempty"`
-	ValueType         string      `json:"value_type,omitempty"`
-	Type              string      `json:"type,omitempty"`
-	Namespace         string      `json:"namespace,omitempty"`
-	Description       string      `json:"description,omitempty"`
-	OwnerId           int64       `json:"owner_id,omitempty"`
-	CreatedAt         *time.Time  `json:"created_at,omitempty"`
-	UpdatedAt         *time.Time  `json:"updated_at,omitempty"`
-	OwnerResource     string      `json:"owner_resource,omitempty"`
-	AdminGraphqlAPIID string      `json:"admin_graphql_api_id,omitempty"`
+	ID                int64       `json:"id,omitempty" bson:"id,omitempty"`
+	Key               string      `json:"key,omitempty" bson:"key,omitempty"`
+	Value             interface{} `json:"value,omitempty" bson:"value,omitempty"`
+	ValueType         string      `json:"value_type,omitempty" bson:"value_type,omitempty"`
+	Type              string      `json:"type,omitempty" bson:"type,omitempty"`
+	Namespace         string      `json:"namespace,omitempty" bson:"namespace,omitempty"`
+	Description       string      `json:"description,omitempty" bson:"description,omitempty"`
+	OwnerId           int64       `json:"owner_id,omitempty" bson:"owner_id,omitempty"`
+	CreatedAt         *time.Time  `json:"created_at,omitempty" bson:"created_at,omitempty"`
+	UpdatedAt         *time.Time  `json:"updated_at,omitempty" bson:"updated_at,omitempty"`
+	OwnerResource     string      `json:"owner_resource,omitempty" bson:"owner_resource,omitempty"`
+	AdminGraphqlAPIID string      `json:"admin_graphql_api_id,omitempty" bson:"admin_graphql_api_id,omitempty"`
 }
 
 // MetafieldResource represents the result from the metafields/X.json endpoint
 type MetafieldResource struct {
-	Metafield *Metafield `json:"metafield"`
+	Metafield *Metafield `json:"metafield" bson:"metafield"`
 }
 
 // MetafieldsResource represents the result from the metafields.json endpoint
 type MetafieldsResource struct {
-	Metafields []Metafield `json:"metafields"`
+	Metafields []Metafield `json:"metafields" bson:"metafields"`
 }
 
 // List metafields

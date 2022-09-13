@@ -24,22 +24,22 @@ type StorefrontAccessTokenServiceOp struct {
 
 // StorefrontAccessToken represents a Shopify storefront access token
 type StorefrontAccessToken struct {
-	ID                int64      `json:"id,omitempty"`
-	Title             string     `json:"title,omitempty"`
-	AccessToken       string     `json:"access_token,omitempty"`
-	AccessScope       string     `json:"access_scope,omitempty"`
-	AdminGraphqlAPIID string     `json:"admin_graphql_api_id,omitempty"`
-	CreatedAt         *time.Time `json:"created_at,omitempty"`
+	ID                int64      `json:"id,omitempty" bson:"id,omitempty"`
+	Title             string     `json:"title,omitempty" bson:"title,omitempty"`
+	AccessToken       string     `json:"access_token,omitempty" bson:"access_token,omitempty"`
+	AccessScope       string     `json:"access_scope,omitempty" bson:"access_scope,omitempty"`
+	AdminGraphqlAPIID string     `json:"admin_graphql_api_id,omitempty" bson:"admin_graphql_api_id,omitempty"`
+	CreatedAt         *time.Time `json:"created_at,omitempty" bson:"created_at,omitempty"`
 }
 
 // StorefrontAccessTokenResource represents the result from the admin/storefront_access_tokens.json endpoint
 type StorefrontAccessTokenResource struct {
-	StorefrontAccessToken *StorefrontAccessToken `json:"storefront_access_token"`
+	StorefrontAccessToken *StorefrontAccessToken `json:"storefront_access_token" bson:"storefront_access_token"`
 }
 
 // StorefrontAccessTokensResource is the root object for a storefront access tokens get request.
 type StorefrontAccessTokensResource struct {
-	StorefrontAccessTokens []StorefrontAccessToken `json:"storefront_access_tokens"`
+	StorefrontAccessTokens []StorefrontAccessToken `json:"storefront_access_tokens" bson:"storefront_access_tokens"`
 }
 
 // List storefront access tokens

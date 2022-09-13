@@ -30,34 +30,34 @@ type ProductListingServiceOp struct {
 
 // ProductListing represents a Shopify product published to your sales channel app
 type ProductListing struct {
-	ID          int64           `json:"product_id,omitempty"`
-	Title       string          `json:"title,omitempty"`
-	BodyHTML    string          `json:"body_html,omitempty"`
-	Vendor      string          `json:"vendor,omitempty"`
-	ProductType string          `json:"product_type,omitempty"`
-	Handle      string          `json:"handle,omitempty"`
-	CreatedAt   *time.Time      `json:"created_at,omitempty"`
-	UpdatedAt   *time.Time      `json:"updated_at,omitempty"`
-	PublishedAt *time.Time      `json:"published_at,omitempty"`
-	Tags        string          `json:"tags,omitempty"`
-	Options     []ProductOption `json:"options,omitempty"`
-	Variants    []Variant       `json:"variants,omitempty"`
-	Images      []Image         `json:"images,omitempty"`
+	ID          int64           `json:"product_id,omitempty" bson:"id,omitempty"`
+	Title       string          `json:"title,omitempty" bson:"title,omitempty"`
+	BodyHTML    string          `json:"body_html,omitempty" bson:"body_html,omitempty"`
+	Vendor      string          `json:"vendor,omitempty" bson:"vendor,omitempty"`
+	ProductType string          `json:"product_type,omitempty" bson:"product_type,omitempty"`
+	Handle      string          `json:"handle,omitempty" bson:"handle,omitempty"`
+	CreatedAt   *time.Time      `json:"created_at,omitempty" bson:"created_at,omitempty"`
+	UpdatedAt   *time.Time      `json:"updated_at,omitempty" bson:"updated_at,omitempty"`
+	PublishedAt *time.Time      `json:"published_at,omitempty" bson:"published_at,omitempty"`
+	Tags        string          `json:"tags,omitempty" bson:"tags,omitempty"`
+	Options     []ProductOption `json:"options,omitempty" bson:"options,omitempty"`
+	Variants    []Variant       `json:"variants,omitempty" bson:"variants,omitempty"`
+	Images      []Image         `json:"images,omitempty" bson:"images,omitempty"`
 }
 
 // Represents the result from the product_listings/X.json endpoint
 type ProductListingResource struct {
-	ProductListing *ProductListing `json:"product_listing"`
+	ProductListing *ProductListing `json:"product_listing" bson:"product_listing"`
 }
 
 // Represents the result from the product_listings.json endpoint
 type ProductsListingsResource struct {
-	ProductListings []ProductListing `json:"product_listings"`
+	ProductListings []ProductListing `json:"product_listings" bson:"product_listings"`
 }
 
 // Represents the result from the product_listings/product_ids.json endpoint
 type ProductListingIDsResource struct {
-	ProductIDs []int64 `json:"product_ids"`
+	ProductIDs []int64 `json:"product_ids" bson:"product_ids"`
 }
 
 // Resource which create product_listing endpoint expects in request body
@@ -70,8 +70,8 @@ type ProductListingIDsResource struct {
 // }
 type ProductListingPublishResource struct {
 	ProductListing struct {
-		ProductID int64 `json:"product_id"`
-	} `json:"product_listing"`
+		ProductID int64 `json:"product_id" bson:"product_id"`
+	} `json:"product_listing" bson:"product_listing"`
 }
 
 // List products

@@ -102,7 +102,7 @@ func TestOrderListWithPagination(t *testing.T) {
 			`<http://valid.url?page_info=foo&limit=2>; rel="next"`,
 			[]Order{{ID: 1}},
 			&Pagination{
-				NextPageOptions: &ListOptions{PageInfo: "foo", Limit: 2},
+				NextPageOptions: &ListOptions{PageInfo: PString("foo"), Limit: PInt(2)},
 			},
 			nil,
 		},
@@ -111,8 +111,8 @@ func TestOrderListWithPagination(t *testing.T) {
 			`<http://valid.url?page_info=foo>; rel="next", <http://valid.url?page_info=bar>; rel="previous"`,
 			[]Order{{ID: 2}},
 			&Pagination{
-				NextPageOptions:     &ListOptions{PageInfo: "foo"},
-				PreviousPageOptions: &ListOptions{PageInfo: "bar"},
+				NextPageOptions:     &ListOptions{PageInfo: PString("foo")},
+				PreviousPageOptions: &ListOptions{PageInfo: PString("bar")},
 			},
 			nil,
 		},
@@ -245,13 +245,11 @@ func TestOrderListOptions(t *testing.T) {
 		httpmock.NewBytesResponder(200, loadFixture("orders.json")))
 
 	options := OrderListOptions{
-		ListOptions: ListOptions{
-			Page:   10,
-			Limit:  250,
-			Fields: "id,name",
-		},
+		Page:   PInt(10),
+		Limit:  PInt(250),
+		Fields: PString("id,name"),
 
-		Status: "any",
+		Status: PString("any"),
 	}
 
 	orders, err := client.Order.List(options)
@@ -345,7 +343,7 @@ func TestOrderCount(t *testing.T) {
 	}
 
 	date := time.Date(2016, time.January, 1, 0, 0, 0, 0, time.UTC)
-	cnt, err = client.Order.Count(OrderCountOptions{CreatedAtMin: date})
+	cnt, err = client.Order.Count(OrderCountOptions{CreatedAtMin: &date})
 	if err != nil {
 		t.Errorf("Order.Count returned error: %v", err)
 	}

@@ -14,7 +14,7 @@ const collectionsBasePath = "collections"
 type CollectionService interface {
 	Get(collectionID int64, options interface{}) (*Collection, error)
 	ListProducts(collectionID int64, options interface{}) ([]Product, error)
-	ListProductsWithPagination(collectionID int64,options interface{}) ([]Product, *Pagination, error)
+	ListProductsWithPagination(collectionID int64, options interface{}) ([]Product, *Pagination, error)
 }
 
 // CollectionServiceOp handles communication with the collection related methods of
@@ -25,21 +25,22 @@ type CollectionServiceOp struct {
 
 // Collection represents a Shopify collection
 type Collection struct {
-	ID             int64       `json:"id"`
-	Handle         string      `json:"handle"`
-	Title          string      `json:"title"`
-	UpdatedAt      *time.Time  `json:"updated_at"`
-	BodyHTML       string      `json:"body_html"`
-	SortOrder      string      `json:"sort_order"`
-	TemplateSuffix string      `json:"template_suffix"`
-	Image          Image       `json:"image"`
-	PublishedAt    *time.Time  `json:"published_at"`
-	PublishedScope string      `json:"published_scope"`
+	ID             int64      `json:"id" bson:"id"`
+	Handle         string     `json:"handle" bson:"handle"`
+	Title          string     `json:"title" bson:"title"`
+	UpdatedAt      *time.Time `json:"updated_at" bson:"updated_at"`
+	BodyHTML       string     `json:"body_html" bson:"body_html"`
+	SortOrder      string     `json:"sort_order" bson:"sort_order"`
+	TemplateSuffix string     `json:"template_suffix" bson:"template_suffix"`
+	Image          Image      `json:"image" bson:"image"`
+	PublishedAt    *time.Time `json:"published_at" bson:"published_at"`
+	PublishedScope string     `json:"published_scope" bson:"published_scope"`
+	CollectionType string     `json:"collection_type" bson:"collection_type"`
 }
 
 // Represents the result from the collections/X.json endpoint
 type CollectionResource struct {
-	Collection *Collection `json:"collection"`
+	Collection *Collection `json:"collection" bson:"collection"`
 }
 
 // Get individual collection
@@ -60,7 +61,7 @@ func (s *CollectionServiceOp) ListProducts(collectionID int64, options interface
 }
 
 // List products for a collection and return pagination to retrieve next/previous results.
-func (s *CollectionServiceOp) ListProductsWithPagination(collectionID int64,options interface{}) ([]Product, *Pagination, error) {
+func (s *CollectionServiceOp) ListProductsWithPagination(collectionID int64, options interface{}) ([]Product, *Pagination, error) {
 	path := fmt.Sprintf("%s/%d/products.json", collectionsBasePath, collectionID)
 	resource := new(ProductsResource)
 	headers := http.Header{}

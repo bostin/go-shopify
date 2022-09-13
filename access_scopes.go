@@ -5,18 +5,18 @@ type AccessScopesService interface {
 }
 
 type AccessScope struct {
-	Handle string `json:"handle,omitempty"`
+	Handle string `json:"handle,omitempty" bson:"handle,omitempty"`
 }
 
 // AccessScopesResource represents the result from the oauth/access_scopes.json endpoint
 type AccessScopesResource struct {
-	AccessScopes []AccessScope `json:"access_scopes,omitempty"`
+	AccessScopes []AccessScope `json:"access_scopes,omitempty" bson:"access_scopes,omitempty"`
 }
 
 // AccessScopesServiceOp handles communication with the Access Scopes
 // related methods of the Shopify API
 type AccessScopesServiceOp struct {
-	client     *Client
+	client *Client
 }
 
 // List gets access scopes based on used oauth token

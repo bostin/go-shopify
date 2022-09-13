@@ -9,8 +9,8 @@ const themesBasePath = "themes"
 
 // Options for theme list
 type ThemeListOptions struct {
-	Role   string `url:"role,omitempty"`
-	Fields string `url:"fields,omitempty"`
+	Role   string `url:"role,omitempty" bson:"role"`
+	Fields string `url:"fields,omitempty" bson:"fields"`
 }
 
 // ThemeService is an interface for interfacing with the themes endpoints
@@ -32,25 +32,25 @@ type ThemeServiceOp struct {
 
 // Theme represents a Shopify theme
 type Theme struct {
-	ID                int64      `json:"id"`
-	Name              string     `json:"name"`
-	Previewable       bool       `json:"previewable"`
-	Processing        bool       `json:"processing"`
-	Role              string     `json:"role"`
-	ThemeStoreID      int64      `json:"theme_store_id"`
-	AdminGraphQLApiID string     `json:"admin_graphql_api_id"`
-	CreatedAt         *time.Time `json:"created_at"`
-	UpdatedAt         *time.Time `json:"updated_at"`
+	ID                int64      `json:"id" bson:"id"`
+	Name              string     `json:"name" bson:"name"`
+	Previewable       bool       `json:"previewable" bson:"previewable"`
+	Processing        bool       `json:"processing" bson:"processing"`
+	Role              string     `json:"role" bson:"role"`
+	ThemeStoreID      int64      `json:"theme_store_id" bson:"theme_store_id"`
+	AdminGraphQLApiID string     `json:"admin_graphql_api_id" bson:"admin_graph_ql_api_id"`
+	CreatedAt         *time.Time `json:"created_at" bson:"created_at"`
+	UpdatedAt         *time.Time `json:"updated_at" bson:"updated_at"`
 }
 
 // ThemesResource is the result from the themes/X.json endpoint
 type ThemeResource struct {
-	Theme *Theme `json:"theme"`
+	Theme *Theme `json:"theme" bson:"theme"`
 }
 
 // ThemesResource is the result from the themes.json endpoint
 type ThemesResource struct {
-	Themes []Theme `json:"themes"`
+	Themes []Theme `json:"themes" bson:"themes"`
 }
 
 // List all themes

@@ -126,7 +126,7 @@ func TestProductListingListWithPagination(t *testing.T) {
 			`<http://valid.url?page_info=foo&limit=2>; rel="next"`,
 			[]ProductListing{{ID: 1}},
 			&Pagination{
-				NextPageOptions: &ListOptions{PageInfo: "foo", Limit: 2},
+				NextPageOptions: &ListOptions{PageInfo: PString("foo"), Limit: PInt(2)},
 			},
 			nil,
 		},
@@ -135,8 +135,8 @@ func TestProductListingListWithPagination(t *testing.T) {
 			`<http://valid.url?page_info=foo>; rel="next", <http://valid.url?page_info=bar>; rel="previous"`,
 			[]ProductListing{{ID: 2}},
 			&Pagination{
-				NextPageOptions:     &ListOptions{PageInfo: "foo"},
-				PreviousPageOptions: &ListOptions{PageInfo: "bar"},
+				NextPageOptions:     &ListOptions{PageInfo: PString("foo")},
+				PreviousPageOptions: &ListOptions{PageInfo: PString("bar")},
 			},
 			nil,
 		},

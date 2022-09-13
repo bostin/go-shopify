@@ -27,27 +27,27 @@ type BlogServiceOp struct {
 
 // Blog represents a Shopify blog
 type Blog struct {
-	ID                 int64      `json:"id"`
-	Title              string     `json:"title"`
-	Commentable        string     `json:"commentable"`
-	Feedburner         string     `json:"feedburner"`
-	FeedburnerLocation string     `json:"feedburner_location"`
-	Handle             string     `json:"handle"`
-	Metafield          Metafield  `json:"metafield"`
-	Tags               string     `json:"tags"`
-	TemplateSuffix     string     `json:"template_suffix"`
-	CreatedAt          *time.Time `json:"created_at"`
-	UpdatedAt          *time.Time `json:"updated_at"`
+	ID                 int64      `json:"id" bson:"id"`
+	Title              string     `json:"title" bson:"title"`
+	Commentable        string     `json:"commentable" bson:"commentable"`
+	Feedburner         string     `json:"feedburner" bson:"feedburner"`
+	FeedburnerLocation string     `json:"feedburner_location" bson:"feedburner_location"`
+	Handle             string     `json:"handle" bson:"handle"`
+	Metafield          Metafield  `json:"metafield" bson:"metafield"`
+	Tags               string     `json:"tags" bson:"tags"`
+	TemplateSuffix     string     `json:"template_suffix" bson:"template_suffix"`
+	CreatedAt          *time.Time `json:"created_at" bson:"created_at"`
+	UpdatedAt          *time.Time `json:"updated_at" bson:"updated_at"`
 }
 
 // BlogsResource is the result from the blogs.json endpoint
 type BlogsResource struct {
-	Blogs []Blog `json:"blogs"`
+	Blogs []Blog `json:"blogs" bson:"blogs"`
 }
 
 // Represents the result from the blogs/X.json endpoint
 type BlogResource struct {
-	Blog *Blog `json:"blog"`
+	Blog *Blog `json:"blog" bson:"blog"`
 }
 
 // List all blogs

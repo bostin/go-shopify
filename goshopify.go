@@ -15,6 +15,7 @@ import (
 	"sort"
 	"strconv"
 	"strings"
+	"sync"
 	"time"
 
 	"github.com/google/go-querystring/query"
@@ -58,6 +59,7 @@ type Client struct {
 	// HTTP client used to communicate with the Shopify API.
 	Client *http.Client
 	log    LeveledLoggerInterface
+	locker sync.Mutex
 
 	// App settings
 	app App
@@ -113,6 +115,7 @@ type Client struct {
 	DiscountCode               DiscountCodeService
 	PriceRule                  PriceRuleService
 	InventoryItem              InventoryItemService
+	InventoryLevel             InventoryLevelService
 	ShippingZone               ShippingZoneService
 	ProductListing             ProductListingService
 	AccessScopes               AccessScopesService
@@ -188,7 +191,7 @@ func (c *Client) NewRequest(method, relPath string, body, options interface{}) (
 	// Make the full url based on the relative path
 	u := c.baseURL.ResolveReference(rel)
 
-	// Add custom options
+	// Create custom options
 	if options != nil {
 		optionsQuery, err := query.Values(options)
 		if err != nil {
@@ -251,6 +254,7 @@ func NewClient(app App, shopName, token string, opts ...Option) *Client {
 			Timeout: time.Second * defaultHttpTimeout,
 		},
 		log:        &LeveledLogger{},
+		locker:     sync.Mutex{},
 		app:        app,
 		baseURL:    baseURL,
 		token:      token,
@@ -288,6 +292,7 @@ func NewClient(app App, shopName, token string, opts ...Option) *Client {
 	c.DiscountCode = &DiscountCodeServiceOp{client: c}
 	c.PriceRule = &PriceRuleServiceOp{client: c}
 	c.InventoryItem = &InventoryItemServiceOp{client: c}
+	c.InventoryLevel = &InventoryLevelServiceOp{client: c}
 	c.ShippingZone = &ShippingZoneServiceOp{client: c}
 	c.ProductListing = &ProductListingServiceOp{client: c}
 	c.AccessScopes = &AccessScopesServiceOp{client: c}
@@ -314,6 +319,9 @@ func (c *Client) Do(req *http.Request, v interface{}) error {
 
 // doGetHeaders executes a request, decoding the response into `v` and also returns any response headers.
 func (c *Client) doGetHeaders(req *http.Request, v interface{}) (http.Header, error) {
+	c.locker.Lock()
+	defer c.locker.Unlock()
+
 	var resp *http.Response
 	var err error
 	retries := c.retries
@@ -544,21 +552,21 @@ func CheckResponseError(r *http.Response) error {
 type ListOptions struct {
 
 	// PageInfo is used with new pagination search.
-	PageInfo string `url:"page_info,omitempty"`
+	PageInfo *string `json:"page_info" url:"page_info,omitempty"`
 
 	// Page is used to specify a specific page to load.
 	// It is the deprecated way to do pagination.
-	Page         int       `url:"page,omitempty"`
-	Limit        int       `url:"limit,omitempty"`
-	SinceID      int64     `url:"since_id,omitempty"`
-	CreatedAtMin time.Time `url:"created_at_min,omitempty"`
-	CreatedAtMax time.Time `url:"created_at_max,omitempty"`
-	UpdatedAtMin time.Time `url:"updated_at_min,omitempty"`
-	UpdatedAtMax time.Time `url:"updated_at_max,omitempty"`
-	Order        string    `url:"order,omitempty"`
-	Fields       string    `url:"fields,omitempty"`
-	Vendor       string    `url:"vendor,omitempty"`
-	IDs          []int64   `url:"ids,omitempty,comma"`
+	Page         *int       `json:"page" url:"page,omitempty"`
+	Limit        *int       `json:"limit" url:"limit,omitempty"`
+	SinceID      *int64     `json:"since_id" url:"since_id,omitempty"`
+	CreatedAtMin *time.Time `json:"created_at_min" url:"created_at_min,omitempty"`
+	CreatedAtMax *time.Time `json:"created_at_max" url:"created_at_max,omitempty"`
+	UpdatedAtMin *time.Time `json:"updated_at_min" url:"updated_at_min,omitempty"`
+	UpdatedAtMax *time.Time `json:"updated_at_max" url:"updated_at_max,omitempty"`
+	Order        *string    `json:"order" url:"order,omitempty"`
+	Fields       *string    `json:"fields" url:"fields,omitempty"`
+	Vendor       *string    `json:"vendor" url:"vendor,omitempty"`
+	IDs          []int64    `json:"ids" url:"ids,omitempty,comma"`
 }
 
 // General count options that can be used for most collection counts.

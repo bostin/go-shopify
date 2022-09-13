@@ -16,6 +16,19 @@ const productsResourceName = "products"
 // linkRegex is used to extract pagination links from product search results.
 var linkRegex = regexp.MustCompile(`^ *<([^>]+)>; rel="(previous|next)" *$`)
 
+type ProductCountOptions struct {
+	CollectionId    *int64     `json:"collection_id,omitempty" url:"collection_id,omitempty"`
+	CreatedAtMax    *time.Time `json:"created_at_max,omitempty" url:"created_at_max,omitempty"`
+	CreatedAtMin    *time.Time `json:"created_at_min,omitempty" url:"created_at_min,omitempty"`
+	ProductType     *string    `json:"product_type,omitempty" url:"product_type,omitempty"`
+	PublishedAtMax  *time.Time `json:"published_at_max,omitempty" url:"published_at_max,omitempty"`
+	PublishedAtMin  *time.Time `json:"published_at_min,omitempty" url:"published_at_min,omitempty"`
+	PublishedStatus *string    `json:"published_status,omitempty" url:"published_status,omitempty"`
+	UpdatedAtMax    *time.Time `json:"updated_at_max,omitempty" url:"updated_at_max,omitempty"`
+	UpdatedAtMin    *time.Time `json:"updated_at_min,omitempty" url:"updated_at_min,omitempty"`
+	Vendor          *string    `json:"vendor,omitempty" url:"vendor,omitempty"`
+}
+
 // ProductService is an interface for interfacing with the product endpoints
 // of the Shopify API.
 // See: https://help.shopify.com/api/reference/product
@@ -40,57 +53,67 @@ type ProductServiceOp struct {
 
 // Product represents a Shopify product
 type Product struct {
-	ID                             int64           `json:"id,omitempty"`
-	Title                          string          `json:"title,omitempty"`
-	BodyHTML                       string          `json:"body_html,omitempty"`
-	Vendor                         string          `json:"vendor,omitempty"`
-	ProductType                    string          `json:"product_type,omitempty"`
-	Handle                         string          `json:"handle,omitempty"`
-	CreatedAt                      *time.Time      `json:"created_at,omitempty"`
-	UpdatedAt                      *time.Time      `json:"updated_at,omitempty"`
-	PublishedAt                    *time.Time      `json:"published_at,omitempty"`
-	PublishedScope                 string          `json:"published_scope,omitempty"`
-	Tags                           string          `json:"tags,omitempty"`
-	Options                        []ProductOption `json:"options,omitempty"`
-	Variants                       []Variant       `json:"variants,omitempty"`
-	Image                          Image           `json:"image,omitempty"`
-	Images                         []Image         `json:"images,omitempty"`
-	TemplateSuffix                 string          `json:"template_suffix,omitempty"`
-	MetafieldsGlobalTitleTag       string          `json:"metafields_global_title_tag,omitempty"`
-	MetafieldsGlobalDescriptionTag string          `json:"metafields_global_description_tag,omitempty"`
-	Metafields                     []Metafield     `json:"metafields,omitempty"`
-	AdminGraphqlAPIID              string          `json:"admin_graphql_api_id,omitempty"`
+	ID                             int64           `json:"id,omitempty" bson:"id,omitempty"`
+	Title                          string          `json:"title,omitempty" bson:"title,omitempty"`
+	BodyHTML                       string          `json:"body_html,omitempty" bson:"body_html,omitempty"`
+	Vendor                         string          `json:"vendor,omitempty" bson:"vendor,omitempty"`
+	ProductType                    string          `json:"product_type,omitempty" bson:"product_type,omitempty"`
+	Handle                         string          `json:"handle,omitempty" bson:"handle,omitempty"`
+	CreatedAt                      *time.Time      `json:"created_at,omitempty" bson:"created_at,omitempty"`
+	UpdatedAt                      *time.Time      `json:"updated_at,omitempty" bson:"updated_at,omitempty"`
+	PublishedAt                    *time.Time      `json:"published_at,omitempty" bson:"published_at,omitempty"`
+	PublishedScope                 string          `json:"published_scope,omitempty" bson:"published_scope,omitempty"`
+	Tags                           string          `json:"tags,omitempty" bson:"tags,omitempty"`
+	Options                        []ProductOption `json:"options,omitempty" bson:"options,omitempty"`
+	Variants                       []Variant       `json:"variants,omitempty" bson:"variants,omitempty"`
+	Image                          Image           `json:"image,omitempty" bson:"image,omitempty"`
+	Images                         []Image         `json:"images,omitempty" bson:"images,omitempty"`
+	Status                         string          `json:"status,omitempty" bson:"status,omitempty"`
+	TemplateSuffix                 string          `json:"template_suffix,omitempty" bson:"template_suffix,omitempty"`
+	MetafieldsGlobalTitleTag       string          `json:"metafields_global_title_tag,omitempty" bson:"metafields_global_title_tag,omitempty"`
+	MetafieldsGlobalDescriptionTag string          `json:"metafields_global_description_tag,omitempty" bson:"metafields_global_description_tag,omitempty"`
+	Metafields                     []Metafield     `json:"metafields,omitempty" bson:"metafields,omitempty"`
+	AdminGraphqlAPIID              string          `json:"admin_graphql_api_id,omitempty" bson:"admin_graphql_api_id,omitempty"`
 }
 
 // The options provided by Shopify
 type ProductOption struct {
-	ID        int64    `json:"id,omitempty"`
-	ProductID int64    `json:"product_id,omitempty"`
-	Name      string   `json:"name,omitempty"`
-	Position  int      `json:"position,omitempty"`
-	Values    []string `json:"values,omitempty"`
+	ID        int64    `json:"id,omitempty" bson:"id,omitempty"`
+	ProductID int64    `json:"product_id,omitempty" bson:"product_id,omitempty"`
+	Name      string   `json:"name,omitempty" bson:"name,omitempty"`
+	Position  int      `json:"position,omitempty" bson:"position,omitempty"`
+	Values    []string `json:"values,omitempty" bson:"values,omitempty"`
 }
 
 type ProductListOptions struct {
-	ListOptions
-	CollectionID          int64     `url:"collection_id,omitempty"`
-	ProductType           string    `url:"product_type,omitempty"`
-	Vendor                string    `url:"vendor,omitempty"`
-	Handle                string    `url:"handle,omitempty"`
-	PublishedAtMin        time.Time `url:"published_at_min,omitempty"`
-	PublishedAtMax        time.Time `url:"published_at_max,omitempty"`
-	PublishedStatus       string    `url:"published_status,omitempty"`
-	PresentmentCurrencies string    `url:"presentment_currencies,omitempty"`
+	CollectionId          *int64     `json:"collection_id,omitempty" url:"collection_id,omitempty"`
+	CreatedAtMax          *time.Time `json:"created_at_max,omitempty" url:"created_at_max,omitempty"`
+	CreatedAtMin          *time.Time `json:"created_at_min,omitempty" url:"created_at_min,omitempty"`
+	Fields                *string    `json:"fields,omitempty" url:"fields,omitempty"`
+	Handle                *string    `json:"handle,omitempty" url:"handle,omitempty"`
+	IDs                   *string    `json:"ids,omitempty" url:"ids,omitempty"`
+	Limit                 *int       `json:"limit,omitempty" url:"limit,omitempty"`
+	PresentmentCurrencies *string    `json:"presentment_currencies,omitempty" url:"presentment_currencies,omitempty"`
+	ProductType           *string    `json:"product_type,omitempty" url:"product_type,omitempty"`
+	PublishedAtMax        *time.Time `json:"published_at_max,omitempty" url:"published_at_max,omitempty"`
+	PublishedAtMin        *time.Time `json:"published_at_min,omitempty" url:"published_at_min,omitempty"`
+	PublishedStatus       *string    `json:"published_status,omitempty" url:"published_status,omitempty"`
+	SinceID               *int64     `json:"since_id,omitempty" url:"since_id,omitempty"`
+	Status                *string    `json:"status,omitempty" url:"status,omitempty"`
+	Title                 *string    `json:"title,omitempty" url:"title,omitempty"`
+	UpdatedAtMax          *time.Time `json:"updated_at_max,omitempty" url:"updated_at_max,omitempty"`
+	UpdatedAtMin          *time.Time `json:"updated_at_min,omitempty" url:"updated_at_min,omitempty"`
+	Vendor                *string    `json:"vendor,omitempty" url:"vendor,omitempty"`
 }
 
 // Represents the result from the products/X.json endpoint
 type ProductResource struct {
-	Product *Product `json:"product"`
+	Product *Product `json:"product" bson:"product"`
 }
 
 // Represents the result from the products.json endpoint
 type ProductsResource struct {
-	Products []Product `json:"products"`
+	Products []Product `json:"products" bson:"products"`
 }
 
 // Pagination of results
@@ -168,20 +191,23 @@ func extractPagination(linkHeader string) (*Pagination, error) {
 
 		paginationListOptions := ListOptions{}
 
-		paginationListOptions.PageInfo = params.Get("page_info")
-		if paginationListOptions.PageInfo == "" {
+		pageInfo := params.Get("page_info")
+		if pageInfo == "" {
 			err = ResponseDecodingError{
 				Message: "page_info is missing",
 			}
 			return nil, err
+		} else {
+			paginationListOptions.PageInfo = &pageInfo
 		}
 
 		limit := params.Get("limit")
 		if limit != "" {
-			paginationListOptions.Limit, err = strconv.Atoi(params.Get("limit"))
+			nLimit, err := strconv.Atoi(params.Get("limit"))
 			if err != nil {
 				return nil, err
 			}
+			paginationListOptions.Limit = &nLimit
 		}
 
 		// 'rel' is either next or previous

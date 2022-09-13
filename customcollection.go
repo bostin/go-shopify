@@ -8,6 +8,31 @@ import (
 const customCollectionsBasePath = "custom_collections"
 const customCollectionsResourceName = "collections"
 
+type CustomerCollectionCountOptions struct {
+	ProductId       *int       `json:"product_id,omitempty"  url:"product_id,omitempty"`
+	PublishedAtMax  *time.Time `json:"published_at_max,omitempty"  url:"published_at_max,omitempty"`
+	PublishedAtMin  *time.Time `json:"published_at_min,omitempty"  url:"published_at_min,omitempty"`
+	PublishedStatus *string    `json:"published_status,omitempty"  url:"published_status,omitempty"`
+	Title           *string    `json:"title,omitempty"  url:"title,omitempty"`
+	UpdatedAtMax    *time.Time `json:"updated_at_max"  url:"updated_at_max,omitempty"`
+	UpdatedAtMin    *time.Time `json:"updated_at_min"  url:"updated_at_min,omitempty"`
+}
+
+type CustomerCollectionListOptions struct {
+	Fields          *string    `json:"fields,omitempty" url:"fields,omitempty"`
+	Handle          *string    `json:"handle,omitempty" url:"handle,omitempty"`
+	Ids             *string    `json:"ids,omitempty" url:"ids,omitempty"`
+	Limit           *int       `json:"limit,omitempty" url:"limit,omitempty"`
+	ProductId       *int       `json:"product_id,omitempty" url:"product_id,omitempty"`
+	PublishedAtMax  *time.Time `json:"published_at_max,omitempty" url:"published_at_max,omitempty"`
+	PublishedAtMin  *time.Time `json:"published_at_min,omitempty" url:"published_at_min,omitempty"`
+	PublishedStatus *string    `json:"published_status,omitempty" url:"published_status,omitempty"`
+	SinceId         *int64     `json:"since_id,omitempty" url:"since_id,omitempty"`
+	Title           *string    `json:"title,omitempty" url:"title,omitempty"`
+	UpdatedAtMax    *time.Time `json:"updated_at_max,omitempty" url:"updated_at_max,omitempty"`
+	UpdatedAtMin    *time.Time `json:"updated_at_min,omitempty" url:"updated_at_min,omitempty"`
+}
+
 // CustomCollectionService is an interface for interacting with the custom
 // collection endpoints of the Shopify API.
 // See https://help.shopify.com/api/reference/customcollection
@@ -31,28 +56,28 @@ type CustomCollectionServiceOp struct {
 
 // CustomCollection represents a Shopify custom collection.
 type CustomCollection struct {
-	ID             int64       `json:"id"`
-	Handle         string      `json:"handle"`
-	Title          string      `json:"title"`
-	UpdatedAt      *time.Time  `json:"updated_at"`
-	BodyHTML       string      `json:"body_html"`
-	SortOrder      string      `json:"sort_order"`
-	TemplateSuffix string      `json:"template_suffix"`
-	Image          Image       `json:"image"`
-	Published      bool        `json:"published"`
-	PublishedAt    *time.Time  `json:"published_at"`
-	PublishedScope string      `json:"published_scope"`
-	Metafields     []Metafield `json:"metafields,omitempty"`
+	ID             int64       `json:"id" bson:"id"`
+	Handle         string      `json:"handle" bson:"handle"`
+	Title          string      `json:"title" bson:"title"`
+	UpdatedAt      *time.Time  `json:"updated_at" bson:"updated_at"`
+	BodyHTML       string      `json:"body_html" bson:"body_html"`
+	SortOrder      string      `json:"sort_order" bson:"sort_order"`
+	TemplateSuffix string      `json:"template_suffix" bson:"template_suffix"`
+	Image          Image       `json:"image" bson:"image"`
+	Published      bool        `json:"published" bson:"published"`
+	PublishedAt    *time.Time  `json:"published_at" bson:"published_at"`
+	PublishedScope string      `json:"published_scope" bson:"published_scope"`
+	Metafields     []Metafield `json:"metafields,omitempty" bson:"metafields"`
 }
 
 // CustomCollectionResource represents the result form the custom_collections/X.json endpoint
 type CustomCollectionResource struct {
-	Collection *CustomCollection `json:"custom_collection"`
+	Collection *CustomCollection `json:"custom_collection" bson:"custom_collection"`
 }
 
 // CustomCollectionsResource represents the result from the custom_collections.json endpoint
 type CustomCollectionsResource struct {
-	Collections []CustomCollection `json:"custom_collections"`
+	Collections []CustomCollection `json:"custom_collections" bson:"custom_collections"`
 }
 
 // List custom collections

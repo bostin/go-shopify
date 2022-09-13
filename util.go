@@ -46,3 +46,15 @@ func FulfillmentPathPrefix(resource string, resourceID int64) string {
 	}
 	return prefix
 }
+
+func PString(v string) *string {
+	return &v
+}
+
+func PInt64(v int64) *int64 {
+	return &v
+}
+
+func PInt(v int) *int {
+	return &v
+}

@@ -20,12 +20,12 @@ type TransactionServiceOp struct {
 
 // TransactionResource represents the result from the orders/X/transactions/Y.json endpoint
 type TransactionResource struct {
-	Transaction *Transaction `json:"transaction"`
+	Transaction *Transaction `json:"transaction" bson:"transaction"`
 }
 
 // TransactionsResource represents the result from the orders/X/transactions.json endpoint
 type TransactionsResource struct {
-	Transactions []Transaction `json:"transactions"`
+	Transactions []Transaction `json:"transactions" bson:"transactions"`
 }
 
 // List transactions

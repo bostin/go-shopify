@@ -448,7 +448,7 @@ func TestCustomerListOrders(t *testing.T) {
 		t.Errorf("Customer.ListOrders got %v orders, expected: 1", len(orders))
 	}
 
-	orders, err = client.Customer.ListOrders(1, OrderListOptions{Status: "any"})
+	orders, err = client.Customer.ListOrders(1, OrderListOptions{Status: PString("any")})
 	if err != nil {
 		t.Errorf("Customer.ListOrders returned error: %v", err)
 	}

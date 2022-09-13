@@ -26,19 +26,19 @@ type RedirectServiceOp struct {
 
 // Redirect represents a Shopify redirect.
 type Redirect struct {
-	ID     int64  `json:"id"`
-	Path   string `json:"path"`
-	Target string `json:"target"`
+	ID     int64  `json:"id" bson:"id"`
+	Path   string `json:"path" bson:"path"`
+	Target string `json:"target" bson:"target"`
 }
 
 // RedirectResource represents the result from the redirects/X.json endpoint
 type RedirectResource struct {
-	Redirect *Redirect `json:"redirect"`
+	Redirect *Redirect `json:"redirect" bson:"redirect"`
 }
 
 // RedirectsResource represents the result from the redirects.json endpoint
 type RedirectsResource struct {
-	Redirects []Redirect `json:"redirects"`
+	Redirects []Redirect `json:"redirects" bson:"redirects"`
 }
 
 // List redirects

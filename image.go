@@ -25,27 +25,27 @@ type ImageServiceOp struct {
 
 // Image represents a Shopify product's image.
 type Image struct {
-	ID         int64      `json:"id,omitempty"`
-	ProductID  int64      `json:"product_id,omitempty"`
-	Position   int        `json:"position,omitempty"`
-	CreatedAt  *time.Time `json:"created_at,omitempty"`
-	UpdatedAt  *time.Time `json:"updated_at,omitempty"`
-	Width      int        `json:"width,omitempty"`
-	Height     int        `json:"height,omitempty"`
-	Src        string     `json:"src,omitempty"`
-	Attachment string     `json:"attachment,omitempty"`
-	Filename   string     `json:"filename,omitempty"`
-	VariantIds []int64    `json:"variant_ids,omitempty"`
+	ID         int64      `json:"id,omitempty" bson:"id,omitempty"`
+	ProductID  int64      `json:"product_id,omitempty" bson:"product_id,omitempty"`
+	Position   int        `json:"position,omitempty" bson:"position,omitempty"`
+	CreatedAt  *time.Time `json:"created_at,omitempty" bson:"created_at,omitempty"`
+	UpdatedAt  *time.Time `json:"updated_at,omitempty" bson:"updated_at,omitempty"`
+	Width      int        `json:"width,omitempty" bson:"width,omitempty"`
+	Height     int        `json:"height,omitempty" bson:"height,omitempty"`
+	Src        string     `json:"src,omitempty" bson:"src,omitempty"`
+	Attachment string     `json:"attachment,omitempty" bson:"attachment,omitempty"`
+	Filename   string     `json:"filename,omitempty" bson:"filename,omitempty"`
+	VariantIds []int64    `json:"variant_ids,omitempty" bson:"variant_ids,omitempty"`
 }
 
 // ImageResource represents the result form the products/X/images/Y.json endpoint
 type ImageResource struct {
-	Image *Image `json:"image"`
+	Image *Image `json:"image" bson:"image"`
 }
 
 // ImagesResource represents the result from the products/X/images.json endpoint
 type ImagesResource struct {
-	Images []Image `json:"images"`
+	Images []Image `json:"images" bson:"images"`
 }
 
 // List images
