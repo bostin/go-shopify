@@ -24,7 +24,7 @@ func TestProductList(t *testing.T) {
 	setup()
 	defer teardown()
 
-	httpmock.RegisterResponder("GET", fmt.Sprintf("https://fooshop.myshopify.com/%s/products.json", client.pathPrefix),
+	httpmock.RegisterResponder("GET", fmt.Sprintf("https://"+testHost+"/%s/products.json", client.pathPrefix),
 		httpmock.NewStringResponder(200, `{"products": [{"id":1},{"id":2}]}`))
 
 	products, err := client.Product.List(nil)
@@ -45,7 +45,7 @@ func TestProductListFilterByIds(t *testing.T) {
 	params := map[string]string{"ids": "1,2,3"}
 	httpmock.RegisterResponderWithQuery(
 		"GET",
-		fmt.Sprintf("https://fooshop.myshopify.com/%s/products.json", client.pathPrefix),
+		fmt.Sprintf("https://"+testHost+"/%s/products.json", client.pathPrefix),
 		params,
 		httpmock.NewStringResponder(200, `{"products": [{"id":1},{"id":2},{"id":3}]}`))
 
@@ -66,7 +66,7 @@ func TestProductListError(t *testing.T) {
 	setup()
 	defer teardown()
 
-	httpmock.RegisterResponder("GET", fmt.Sprintf("https://fooshop.myshopify.com/%s/products.json", client.pathPrefix),
+	httpmock.RegisterResponder("GET", fmt.Sprintf("https://"+testHost+"/%s/products.json", client.pathPrefix),
 		httpmock.NewStringResponder(500, ""))
 
 	expectedErrMessage := "Unknown Error"
@@ -85,7 +85,7 @@ func TestProductListWithPagination(t *testing.T) {
 	setup()
 	defer teardown()
 
-	listURL := fmt.Sprintf("https://fooshop.myshopify.com/%s/products.json", client.pathPrefix)
+	listURL := fmt.Sprintf("https://"+testHost+"/%s/products.json", client.pathPrefix)
 
 	// The strconv.Atoi error changed in go 1.8, 1.7 is still being tested/supported.
 	limitConversionErrorMessage := `strconv.Atoi: parsing "invalid": invalid syntax`
@@ -205,13 +205,13 @@ func TestProductCount(t *testing.T) {
 	setup()
 	defer teardown()
 
-	httpmock.RegisterResponder("GET", fmt.Sprintf("https://fooshop.myshopify.com/%s/products/count.json", client.pathPrefix),
+	httpmock.RegisterResponder("GET", fmt.Sprintf("https://"+testHost+"/%s/products/count.json", client.pathPrefix),
 		httpmock.NewStringResponder(200, `{"count": 3}`))
 
 	params := map[string]string{"created_at_min": "2016-01-01T00:00:00Z"}
 	httpmock.RegisterResponderWithQuery(
 		"GET",
-		fmt.Sprintf("https://fooshop.myshopify.com/%s/products/count.json", client.pathPrefix),
+		fmt.Sprintf("https://"+testHost+"/%s/products/count.json", client.pathPrefix),
 		params,
 		httpmock.NewStringResponder(200, `{"count": 2}`))
 
@@ -241,7 +241,7 @@ func TestProductGet(t *testing.T) {
 	setup()
 	defer teardown()
 
-	httpmock.RegisterResponder("GET", fmt.Sprintf("https://fooshop.myshopify.com/%s/products/1.json", client.pathPrefix),
+	httpmock.RegisterResponder("GET", fmt.Sprintf("https://"+testHost+"/%s/products/1.json", client.pathPrefix),
 		httpmock.NewStringResponder(200, `{"product": {"id":1}}`))
 
 	product, err := client.Product.Get(1, nil)
@@ -259,7 +259,7 @@ func TestProductCreate(t *testing.T) {
 	setup()
 	defer teardown()
 
-	httpmock.RegisterResponder("POST", fmt.Sprintf("https://fooshop.myshopify.com/%s/products.json", client.pathPrefix),
+	httpmock.RegisterResponder("POST", fmt.Sprintf("https://"+testHost+"/%s/products.json", client.pathPrefix),
 		httpmock.NewBytesResponder(200, loadFixture("product.json")))
 
 	product := Product{
@@ -281,7 +281,7 @@ func TestProductUpdate(t *testing.T) {
 	setup()
 	defer teardown()
 
-	httpmock.RegisterResponder("PUT", fmt.Sprintf("https://fooshop.myshopify.com/%s/products/1.json", client.pathPrefix),
+	httpmock.RegisterResponder("PUT", fmt.Sprintf("https://"+testHost+"/%s/products/1.json", client.pathPrefix),
 		httpmock.NewBytesResponder(200, loadFixture("product.json")))
 
 	product := Product{
@@ -301,7 +301,7 @@ func TestProductDelete(t *testing.T) {
 	setup()
 	defer teardown()
 
-	httpmock.RegisterResponder("DELETE", fmt.Sprintf("https://fooshop.myshopify.com/%s/products/1.json", client.pathPrefix),
+	httpmock.RegisterResponder("DELETE", fmt.Sprintf("https://"+testHost+"/%s/products/1.json", client.pathPrefix),
 		httpmock.NewStringResponder(200, "{}"))
 
 	err := client.Product.Delete(1)
@@ -314,7 +314,7 @@ func TestProductListMetafields(t *testing.T) {
 	setup()
 	defer teardown()
 
-	httpmock.RegisterResponder("GET", fmt.Sprintf("https://fooshop.myshopify.com/%s/products/1/metafields.json", client.pathPrefix),
+	httpmock.RegisterResponder("GET", fmt.Sprintf("https://"+testHost+"/%s/products/1/metafields.json", client.pathPrefix),
 		httpmock.NewStringResponder(200, `{"metafields": [{"id":1},{"id":2}]}`))
 
 	metafields, err := client.Product.ListMetafields(1, nil)
@@ -332,13 +332,13 @@ func TestProductCountMetafields(t *testing.T) {
 	setup()
 	defer teardown()
 
-	httpmock.RegisterResponder("GET", fmt.Sprintf("https://fooshop.myshopify.com/%s/products/1/metafields/count.json", client.pathPrefix),
+	httpmock.RegisterResponder("GET", fmt.Sprintf("https://"+testHost+"/%s/products/1/metafields/count.json", client.pathPrefix),
 		httpmock.NewStringResponder(200, `{"count": 3}`))
 
 	params := map[string]string{"created_at_min": "2016-01-01T00:00:00Z"}
 	httpmock.RegisterResponderWithQuery(
 		"GET",
-		fmt.Sprintf("https://fooshop.myshopify.com/%s/products/1/metafields/count.json", client.pathPrefix),
+		fmt.Sprintf("https://"+testHost+"/%s/products/1/metafields/count.json", client.pathPrefix),
 		params,
 		httpmock.NewStringResponder(200, `{"count": 2}`))
 
@@ -368,7 +368,7 @@ func TestProductGetMetafield(t *testing.T) {
 	setup()
 	defer teardown()
 
-	httpmock.RegisterResponder("GET", fmt.Sprintf("https://fooshop.myshopify.com/%s/products/1/metafields/2.json", client.pathPrefix),
+	httpmock.RegisterResponder("GET", fmt.Sprintf("https://"+testHost+"/%s/products/1/metafields/2.json", client.pathPrefix),
 		httpmock.NewStringResponder(200, `{"metafield": {"id":2}}`))
 
 	metafield, err := client.Product.GetMetafield(1, 2, nil)
@@ -386,7 +386,7 @@ func TestProductCreateMetafield(t *testing.T) {
 	setup()
 	defer teardown()
 
-	httpmock.RegisterResponder("POST", fmt.Sprintf("https://fooshop.myshopify.com/%s/products/1/metafields.json", client.pathPrefix),
+	httpmock.RegisterResponder("POST", fmt.Sprintf("https://"+testHost+"/%s/products/1/metafields.json", client.pathPrefix),
 		httpmock.NewBytesResponder(200, loadFixture("metafield.json")))
 
 	metafield := Metafield{
@@ -409,7 +409,7 @@ func TestProductUpdateMetafield(t *testing.T) {
 	setup()
 	defer teardown()
 
-	httpmock.RegisterResponder("PUT", fmt.Sprintf("https://fooshop.myshopify.com/%s/products/1/metafields/2.json", client.pathPrefix),
+	httpmock.RegisterResponder("PUT", fmt.Sprintf("https://"+testHost+"/%s/products/1/metafields/2.json", client.pathPrefix),
 		httpmock.NewBytesResponder(200, loadFixture("metafield.json")))
 
 	metafield := Metafield{
@@ -433,7 +433,7 @@ func TestProductDeleteMetafield(t *testing.T) {
 	setup()
 	defer teardown()
 
-	httpmock.RegisterResponder("DELETE", fmt.Sprintf("https://fooshop.myshopify.com/%s/products/1/metafields/2.json", client.pathPrefix),
+	httpmock.RegisterResponder("DELETE", fmt.Sprintf("https://"+testHost+"/%s/products/1/metafields/2.json", client.pathPrefix),
 		httpmock.NewStringResponder(200, "{}"))
 
 	err := client.Product.DeleteMetafield(1, 2)

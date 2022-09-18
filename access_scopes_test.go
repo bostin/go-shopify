@@ -1,9 +1,9 @@
 package goshopify
 
 import (
-	"testing"
 	"fmt"
 	"reflect"
+	"testing"
 
 	"github.com/jarcoal/httpmock"
 )
@@ -14,7 +14,7 @@ func TestAccessScopesServiceOp_List(t *testing.T) {
 
 	httpmock.RegisterResponder(
 		"GET",
-		fmt.Sprintf("https://fooshop.myshopify.com/%s/oauth/access_scopes.json", client.pathPrefix),
+		fmt.Sprintf("https://"+testHost+"/%s/oauth/access_scopes.json", client.pathPrefix),
 		httpmock.NewBytesResponder(200, loadFixture("access_scopes.json")),
 	)
 

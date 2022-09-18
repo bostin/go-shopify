@@ -13,7 +13,7 @@ func TestPriceRuleGet(t *testing.T) {
 
 	httpmock.RegisterResponder(
 		"GET",
-		fmt.Sprintf("https://fooshop.myshopify.com/%s/price_rules/1.json", client.pathPrefix),
+		fmt.Sprintf("https://"+testHost+"/%s/price_rules/1.json", client.pathPrefix),
 		httpmock.NewBytesResponder(
 			200,
 			loadFixture("price_rule/get.json"),
@@ -37,7 +37,7 @@ func TestPriceRuleList(t *testing.T) {
 
 	httpmock.RegisterResponder(
 		"GET",
-		fmt.Sprintf("https://fooshop.myshopify.com/%s/price_rules.json", client.pathPrefix),
+		fmt.Sprintf("https://"+testHost+"/%s/price_rules.json", client.pathPrefix),
 		httpmock.NewBytesResponder(
 			200,
 			loadFixture("price_rule/list.json"),
@@ -61,7 +61,7 @@ func TestPriceRuleCreate(t *testing.T) {
 
 	httpmock.RegisterResponder(
 		"POST",
-		fmt.Sprintf("https://fooshop.myshopify.com/%s/price_rules.json", client.pathPrefix),
+		fmt.Sprintf("https://"+testHost+"/%s/price_rules.json", client.pathPrefix),
 		httpmock.NewBytesResponder(
 			200,
 			loadFixture("price_rule/get.json"),
@@ -85,7 +85,7 @@ func TestPriceRuleUpdate(t *testing.T) {
 
 	httpmock.RegisterResponder(
 		"PUT",
-		fmt.Sprintf("https://fooshop.myshopify.com/%s/price_rules/1.json", client.pathPrefix),
+		fmt.Sprintf("https://"+testHost+"/%s/price_rules/1.json", client.pathPrefix),
 		httpmock.NewBytesResponder(
 			200,
 			loadFixture("price_rule/get.json"),
@@ -109,7 +109,7 @@ func TestPriceRuleDelete(t *testing.T) {
 
 	httpmock.RegisterResponder(
 		"DELETE",
-		fmt.Sprintf("https://fooshop.myshopify.com/%s/price_rules/1.json", client.pathPrefix),
+		fmt.Sprintf("https://"+testHost+"/%s/price_rules/1.json", client.pathPrefix),
 		httpmock.NewBytesResponder(
 			200,
 			loadFixture("price_rule/get.json"),

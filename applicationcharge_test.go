@@ -52,7 +52,7 @@ func TestApplicationChargeServiceOp_Create(t *testing.T) {
 
 	httpmock.RegisterResponder(
 		"POST",
-		fmt.Sprintf("https://fooshop.myshopify.com/%s/application_charges.json", client.pathPrefix),
+		fmt.Sprintf("https://"+testHost+"/%s/application_charges.json", client.pathPrefix),
 		httpmock.NewBytesResponder(200, loadFixture("applicationcharge.json")),
 	)
 
@@ -77,7 +77,7 @@ func TestApplicationChargeServiceOp_Get(t *testing.T) {
 
 	httpmock.RegisterResponder(
 		"GET",
-		fmt.Sprintf("https://fooshop.myshopify.com/%s/application_charges/1.json", client.pathPrefix),
+		fmt.Sprintf("https://"+testHost+"/%s/application_charges/1.json", client.pathPrefix),
 		httpmock.NewStringResponder(200, `{"application_charge": {"id":1}}`),
 	)
 
@@ -98,7 +98,7 @@ func TestApplicationChargeServiceOp_List(t *testing.T) {
 
 	httpmock.RegisterResponder(
 		"GET",
-		fmt.Sprintf("https://fooshop.myshopify.com/%s/application_charges.json", client.pathPrefix),
+		fmt.Sprintf("https://"+testHost+"/%s/application_charges.json", client.pathPrefix),
 		httpmock.NewStringResponder(200, `{"application_charges": [{"id":1},{"id":2}]}`),
 	)
 
@@ -119,7 +119,7 @@ func TestApplicationChargeServiceOp_Activate(t *testing.T) {
 
 	httpmock.RegisterResponder(
 		"POST",
-		fmt.Sprintf("https://fooshop.myshopify.com/%s/application_charges/455696195/activate.json", client.pathPrefix),
+		fmt.Sprintf("https://"+testHost+"/%s/application_charges/455696195/activate.json", client.pathPrefix),
 		httpmock.NewStringResponder(
 			200,
 			`{"application_charge":{"id":455696195,"status":"active"}}`,
