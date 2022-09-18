@@ -9,6 +9,14 @@ import (
 const productListingBasePath = "product_listings"
 const productsListingResourceName = "product_listings"
 
+type ProductListingListOptions struct {
+	CollectionId *int64     `json:"collection_id,omitempty" url:"collection_id,omitempty"`
+	Handle       *string    `json:"handle,omitempty" url:"handle,omitempty"`
+	Limit        *int       `json:"limit,omitempty" url:"limit,omitempty"`
+	ProductIds   *string    `json:"product_ids,omitempty" url:"product_ids,omitempty"`
+	UpdatedAtMin *time.Time `json:"updated_at_min,omitempty" url:"updated_at_min,omitempty"`
+}
+
 // ProductListingService is an interface for interfacing with the product listing endpoints
 // of the Shopify API.
 // See: https://shopify.dev/docs/admin-api/rest/reference/sales-channels/productlisting
@@ -43,6 +51,7 @@ type ProductListing struct {
 	Options     []ProductOption `json:"options,omitempty" bson:"options,omitempty"`
 	Variants    []Variant       `json:"variants,omitempty" bson:"variants,omitempty"`
 	Images      []Image         `json:"images,omitempty" bson:"images,omitempty"`
+	ProductId   uint64          `json:"product_id,omitempty" bson:"product_id,omitempty"`
 }
 
 // Represents the result from the product_listings/X.json endpoint
@@ -63,11 +72,12 @@ type ProductListingIDsResource struct {
 // Resource which create product_listing endpoint expects in request body
 // e.g.
 // PUT /admin/api/2020-07/product_listings/921728736.json
-// {
-//   "product_listing": {
-//     "product_id": 921728736
-//   }
-// }
+//
+//	{
+//	  "product_listing": {
+//	    "product_id": 921728736
+//	  }
+//	}
 type ProductListingPublishResource struct {
 	ProductListing struct {
 		ProductID int64 `json:"product_id" bson:"product_id"`

@@ -10,6 +10,14 @@ import (
 const variantsBasePath = "variants"
 const variantsResourceName = "variants"
 
+type VariantListOptions struct {
+	ProductId             *string  `json:"product_id,omitempty" url:"product_id,omitempty"`
+	Fields                *string  `json:"fields,omitempty" url:"fields,omitempty"`
+	Limit                 *int     `json:"limit,omitempty" url:"limit,omitempty"`
+	PresentmentCurrencies []string `json:"presentment_currencies,omitempty" url:"presentment_currencies,omitempty"`
+	SinceId               *int64   `json:"since_id,omitempty" url:"since_id,omitempty"`
+}
+
 // VariantService is an interface for interacting with the variant endpoints
 // of the Shopify API.
 // See https://help.shopify.com/api/reference/product_variant

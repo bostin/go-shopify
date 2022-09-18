@@ -88,9 +88,8 @@ func verifyAddress(t *testing.T, address CustomerAddress) {
 		t.Errorf("CustomerAddress.CountryName returned %+v, expected %+v", address.CountryName, expectedCountryName)
 	}
 
-	expectedDefault := true
-	if address.Default != expectedDefault {
-		t.Errorf("CustomerAddress.Default returned %+v, expected %+v", address.Default, expectedDefault)
+	if address.Default != true {
+		t.Errorf("CustomerAddress.Default returned %+v, expected %+v", address.Default, true)
 	}
 }
 

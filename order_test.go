@@ -166,8 +166,8 @@ func orderTests(t *testing.T, order Order) {
 	}
 
 	// Check prices
-	p := decimal.NewFromFloat(10)
-	if !p.Equals(*order.TotalPrice) {
+	p := "10"
+	if p != *order.TotalPrice {
 		t.Errorf("Order.TotalPrice returned %+v, expected %+v", order.TotalPrice, p)
 	}
 
@@ -363,7 +363,7 @@ func TestOrderCreate(t *testing.T) {
 
 	order := Order{
 		LineItems: []LineItem{
-			LineItem{
+			{
 				VariantID: 1,
 				Quantity:  1,
 			},
@@ -1155,7 +1155,7 @@ func propertiesEmptyStructLientItem() LineItem {
 func propertiesStructLientItem() LineItem {
 	return LineItem{
 		Properties: []NoteAttribute{
-			NoteAttribute{
+			{
 				Name:  "property 1",
 				Value: float64(3),
 			},
@@ -1191,11 +1191,11 @@ func validLineItem() LineItem {
 		VariantInventoryManagement: "shopify",
 		PreTaxPrice:                &preTaxPrice,
 		Properties: []NoteAttribute{
-			NoteAttribute{
+			{
 				Name:  "note 1",
 				Value: "one",
 			},
-			NoteAttribute{
+			{
 				Name:  "note 2",
 				Value: float64(2),
 			},
@@ -1205,12 +1205,12 @@ func validLineItem() LineItem {
 		Grams:               100,
 		FulfillmentStatus:   "partial",
 		TaxLines: []TaxLine{
-			TaxLine{
+			{
 				Title: "State tax",
 				Price: &tl1Price,
 				Rate:  &tl1Rate,
 			},
-			TaxLine{
+			{
 				Title: "Federal tax",
 				Price: &tl2Price,
 				Rate:  &tl2Rate,
