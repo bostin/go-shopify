@@ -20,6 +20,12 @@ import (
 const (
 	testApiVersion = "9999-99"
 	maxRetries     = 3
+	testHost       = "bostinkiwidh.myshopify.com"
+	testDomain     = "https://bostinkiwidh.myshopify.com"
+	testApiKey     = "30cf479d9168f3ab6b8046724f85f1d9"
+	testApiSecret  = "4704f1cf02b1a5020fc1bcf50701fddf"
+	testShopName   = "bostinkiwidh"
+	testToken      = ""
 )
 
 var (
@@ -38,15 +44,19 @@ func (errReader) Close() error {
 	return nil
 }
 
+func testUrl(uri string) string {
+	return fmt.Sprintf("%s/%s", strings.TrimRight(testDomain, "/"), strings.TrimLeft(uri, "/"))
+}
+
 func setup() {
 	app = App{
-		ApiKey:      "apikey",
-		ApiSecret:   "hush",
-		RedirectUrl: "https://example.com/callback",
+		ApiKey:      testApiKey,
+		ApiSecret:   testApiSecret,
+		RedirectUrl: testUrl("callback"),
 		Scope:       "read_products",
 		Password:    "privateapppassword",
 	}
-	client = NewClient(app, "fooshop", "abcd",
+	client = NewClient(app, testShopName, testToken,
 		WithVersion(testApiVersion),
 		WithRetry(maxRetries))
 	httpmock.ActivateNonDefault(client.Client)
@@ -65,32 +75,32 @@ func loadFixture(filename string) []byte {
 }
 
 func TestNewClient(t *testing.T) {
-	testClient := NewClient(app, "fooshop", "abcd", WithVersion(testApiVersion))
-	expected := "https://fooshop.myshopify.com"
+	testClient := NewClient(app, testShopName, testToken, WithVersion(testApiVersion))
+	expected := testDomain
 	if testClient.baseURL.String() != expected {
 		t.Errorf("NewClient BaseURL = %v, expected %v", testClient.baseURL.String(), expected)
 	}
 }
 
 func TestNewClientWithNoToken(t *testing.T) {
-	testClient := NewClient(app, "fooshop", "", WithVersion(testApiVersion))
-	expected := "https://fooshop.myshopify.com"
+	testClient := NewClient(app, testShopName, "", WithVersion(testApiVersion))
+	expected := testDomain
 	if testClient.baseURL.String() != expected {
 		t.Errorf("NewClient BaseURL = %v, expected %v", testClient.baseURL.String(), expected)
 	}
 }
 
 func TestAppNewClient(t *testing.T) {
-	testClient := app.NewClient("fooshop", "abcd", WithVersion(testApiVersion))
-	expected := "https://fooshop.myshopify.com"
+	testClient := app.NewClient(testShopName, testToken, WithVersion(testApiVersion))
+	expected := testDomain
 	if testClient.baseURL.String() != expected {
 		t.Errorf("NewClient BaseURL = %v, expected %v", testClient.baseURL.String(), expected)
 	}
 }
 
 func TestAppNewClientWithNoToken(t *testing.T) {
-	testClient := app.NewClient("fooshop", "", WithVersion(testApiVersion))
-	expected := "https://fooshop.myshopify.com"
+	testClient := app.NewClient(testShopName, "", WithVersion(testApiVersion))
+	expected := testDomain
 	if testClient.baseURL.String() != expected {
 		t.Errorf("NewClient BaseURL = %v, expected %v", testClient.baseURL.String(), expected)
 	}
@@ -110,15 +120,15 @@ func TestBadShopNamePanic(t *testing.T) {
 			"foo, shop, stuff commas",
 		} {
 			tried = shopName
-			_ = NewClient(app, shopName, "abcd", WithVersion(testApiVersion))
+			_ = NewClient(app, shopName, testToken, WithVersion(testApiVersion))
 		}
 	}()
 }
 
 func TestNewRequest(t *testing.T) {
-	testClient := NewClient(app, "fooshop", "abcd", WithVersion(testApiVersion))
+	testClient := NewClient(app, testShopName, testToken, WithVersion(testApiVersion))
 
-	inURL, outURL := "foo?page=1", "https://fooshop.myshopify.com/foo?limit=10&page=1"
+	inURL, outURL := "foo?page=1", testUrl("/foo?limit=10&page=1")
 	inBody := struct {
 		Hello string `json:"hello"`
 	}{Hello: "World"}
@@ -159,9 +169,9 @@ func TestNewRequest(t *testing.T) {
 }
 
 func TestNewRequestForPrivateApp(t *testing.T) {
-	testClient := NewClient(app, "fooshop", "", WithVersion(testApiVersion))
+	testClient := NewClient(app, testShopName, "", WithVersion(testApiVersion))
 
-	inURL, outURL := "foo?page=1", "https://fooshop.myshopify.com/foo?limit=10&page=1"
+	inURL, outURL := "foo?page=1", testUrl("foo?limit=10&page=1")
 	inBody := struct {
 		Hello string `json:"hello"`
 	}{Hello: "World"}
@@ -216,7 +226,7 @@ func TestNewRequestForPrivateApp(t *testing.T) {
 }
 
 func TestNewRequestMissingToken(t *testing.T) {
-	testClient := NewClient(app, "fooshop", "", WithVersion(testApiVersion))
+	testClient := NewClient(app, testShopName, "", WithVersion(testApiVersion))
 
 	req, _ := testClient.NewRequest("GET", "/foo", nil, nil)
 
@@ -228,7 +238,7 @@ func TestNewRequestMissingToken(t *testing.T) {
 }
 
 func TestNewRequestError(t *testing.T) {
-	testClient := NewClient(app, "fooshop", "abcd", WithVersion(testApiVersion))
+	testClient := NewClient(app, testShopName, testToken, WithVersion(testApiVersion))
 
 	cases := []struct {
 		method  string
@@ -324,7 +334,7 @@ func TestDo(t *testing.T) {
 	}
 
 	for _, c := range cases {
-		shopUrl := fmt.Sprintf("https://fooshop.myshopify.com/%v", c.url)
+		shopUrl := testUrl(c.url)
 		httpmock.RegisterResponder("GET", shopUrl, c.responder)
 
 		body := new(MyStruct)
@@ -359,7 +369,7 @@ func TestRetry(t *testing.T) {
 	}
 
 	var retries int
-	urlFormat := "https://fooshop.myshopify.com/%s"
+	urlFormat := testUrl("%s")
 
 	cases := []struct {
 		relPath   string
@@ -471,9 +481,9 @@ func TestClientDoAutoApiVersion(t *testing.T) {
 	}
 	expected := testApiVersion
 
-	testClient := NewClient(app, "fooshop", "abcd")
+	testClient := NewClient(app, testShopName, testToken)
 	httpmock.ActivateNonDefault(testClient.Client)
-	shopUrl := fmt.Sprintf("https://fooshop.myshopify.com/%v", u)
+	shopUrl := testUrl(u)
 	httpmock.RegisterResponder("GET", shopUrl, responder)
 
 	req, err := testClient.NewRequest("GET", u, nil, nil)
@@ -546,7 +556,7 @@ func TestCustomHTTPClientDo(t *testing.T) {
 		client.Client = c.client
 		httpmock.ActivateNonDefault(client.Client)
 
-		shopUrl := fmt.Sprintf("https://fooshop.myshopify.com/%v", c.url)
+		shopUrl := testUrl(c.url)
 		httpmock.RegisterResponder("GET", shopUrl, c.responder)
 
 		body := new(MyStruct)
@@ -583,7 +593,7 @@ func TestCreateAndDo(t *testing.T) {
 		Foo string `json:"foo"`
 	}
 
-	mockPrefix := fmt.Sprintf("https://fooshop.myshopify.com/%s/", client.pathPrefix)
+	mockPrefix := testUrl(client.pathPrefix) + "/"
 
 	cases := []struct {
 		url       string
@@ -639,11 +649,11 @@ func TestCreateAndDo(t *testing.T) {
 	}
 
 	// test invalid invalid protocol
-	httpmock.RegisterResponder("GET", "://fooshop.myshopify.com/foo/2", httpmock.NewStringResponder(200, ""))
+	httpmock.RegisterResponder("GET", "://"+testHost+"foo/2", httpmock.NewStringResponder(200, ""))
 	body := new(MyStruct)
-	_, err := client.NewRequest("GET", "://fooshop.myshopify.com/foo/2", body, nil)
+	_, err := client.NewRequest("GET", "://"+testHost+"/foo/2", body, nil)
 
-	expected := errors.New("parse \"://fooshop.myshopify.com/foo/2\": missing protocol scheme")
+	expected := errors.New("parse \"://" + testHost + "/foo/2\": missing protocol scheme")
 
 	if err != nil && !strings.Contains(err.Error(), "missing protocol scheme") {
 		t.Errorf("CreateAndDo(): expected error %v, actual %v", expected, err)
@@ -765,13 +775,13 @@ func TestCount(t *testing.T) {
 	defer teardown()
 
 	httpmock.RegisterResponder("GET",
-		fmt.Sprintf("https://fooshop.myshopify.com/%s/foocount", client.pathPrefix),
+		fmt.Sprintf("https://"+testHost+"/%s/foocount", client.pathPrefix),
 		httpmock.NewStringResponder(200, `{"count": 5}`))
 
 	params := map[string]string{"created_at_min": "2016-01-01T00:00:00Z"}
 	httpmock.RegisterResponderWithQuery(
 		"GET",
-		fmt.Sprintf("https://fooshop.myshopify.com/%s/foocount", client.pathPrefix),
+		fmt.Sprintf("https://"+testHost+"/%s/foocount", client.pathPrefix),
 		params,
 		httpmock.NewStringResponder(200, `{"count": 2}`))
 
@@ -873,7 +883,7 @@ func TestDoRateLimit(t *testing.T) {
 	for _, c := range cases {
 		t.Run(c.description, func(t *testing.T) {
 
-			shopUrl := fmt.Sprintf("https://fooshop.myshopify.com/%v", c.url)
+			shopUrl := testUrl(c.url)
 			httpmock.RegisterResponder("GET", shopUrl, c.responder)
 
 			var reqBody struct {

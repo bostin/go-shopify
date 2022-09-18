@@ -110,7 +110,7 @@ func TestRecurringApplicationChargeServiceOp_Create(t *testing.T) {
 
 	httpmock.RegisterResponder(
 		"POST",
-		fmt.Sprintf("https://fooshop.myshopify.com/%s/recurring_application_charges.json", client.pathPrefix),
+		fmt.Sprintf("https://"+testHost+"/%s/recurring_application_charges.json", client.pathPrefix),
 		httpmock.NewBytesResponder(
 			200, loadFixture("reccuringapplicationcharge/reccuringapplicationcharge.json"),
 		),
@@ -137,7 +137,7 @@ func TestRecurringApplicationChargeServiceOp_Get(t *testing.T) {
 
 	httpmock.RegisterResponder(
 		"GET",
-		fmt.Sprintf("https://fooshop.myshopify.com/%s/recurring_application_charges/1.json", client.pathPrefix),
+		fmt.Sprintf("https://"+testHost+"/%s/recurring_application_charges/1.json", client.pathPrefix),
 		httpmock.NewStringResponder(200, `{"recurring_application_charge": {"id":1}}`),
 	)
 
@@ -158,7 +158,7 @@ func TestRecurringApplicationChargeServiceOp_GetAllFieldsAffected(t *testing.T) 
 
 	httpmock.RegisterResponder(
 		"GET",
-		fmt.Sprintf("https://fooshop.myshopify.com/%s/recurring_application_charges/1029266948.json", client.pathPrefix),
+		fmt.Sprintf("https://"+testHost+"/%s/recurring_application_charges/1029266948.json", client.pathPrefix),
 		httpmock.NewBytesResponder(
 			200, loadFixture(
 				"reccuringapplicationcharge/reccuringapplicationcharge_all_fields_affected.json",
@@ -189,7 +189,7 @@ func TestRecurringApplicationChargeServiceOp_GetAllFieldsBad(t *testing.T) {
 
 		httpmock.RegisterResponder(
 			"GET",
-			fmt.Sprintf("https://fooshop.myshopify.com/%s/recurring_application_charges/1029266948.json", client.pathPrefix),
+			fmt.Sprintf("https://"+testHost+"/%s/recurring_application_charges/1029266948.json", client.pathPrefix),
 			httpmock.NewBytesResponder(
 				200,
 				loadFixture(
@@ -212,7 +212,7 @@ func TestRecurringApplicationChargeServiceOp_List(t *testing.T) {
 
 	httpmock.RegisterResponder(
 		"GET",
-		fmt.Sprintf("https://fooshop.myshopify.com/%s/recurring_application_charges.json", client.pathPrefix),
+		fmt.Sprintf("https://"+testHost+"/%s/recurring_application_charges.json", client.pathPrefix),
 		httpmock.NewStringResponder(200, `{"recurring_application_charges": [{"id":1},{"id":2}]}`),
 	)
 
@@ -233,7 +233,7 @@ func TestRecurringApplicationChargeServiceOp_Activate(t *testing.T) {
 
 	httpmock.RegisterResponder(
 		"POST",
-		fmt.Sprintf("https://fooshop.myshopify.com/%s/recurring_application_charges/455696195/activate.json", client.pathPrefix),
+		fmt.Sprintf("https://"+testHost+"/%s/recurring_application_charges/455696195/activate.json", client.pathPrefix),
 		httpmock.NewStringResponder(
 			200, `{"recurring_application_charge":{"id":455696195,"status":"active"}}`,
 		),
@@ -261,7 +261,7 @@ func TestRecurringApplicationChargeServiceOp_Delete(t *testing.T) {
 
 	httpmock.RegisterResponder(
 		"DELETE",
-		fmt.Sprintf("https://fooshop.myshopify.com/%s/recurring_application_charges/1.json", client.pathPrefix),
+		fmt.Sprintf("https://"+testHost+"/%s/recurring_application_charges/1.json", client.pathPrefix),
 		httpmock.NewStringResponder(200, "{}"),
 	)
 
@@ -276,7 +276,7 @@ func TestRecurringApplicationChargeServiceOp_Update(t *testing.T) {
 	params := map[string]string{"recurring_application_charge[capped_amount]": "100"}
 	httpmock.RegisterResponderWithQuery(
 		"PUT",
-		fmt.Sprintf("https://fooshop.myshopify.com/%s/recurring_application_charges/455696195/customize.json", client.pathPrefix),
+		fmt.Sprintf("https://"+testHost+"/%s/recurring_application_charges/455696195/customize.json", client.pathPrefix),
 		params,
 		httpmock.NewStringResponder(
 			200, `{"recurring_application_charge":{"id":455696195,"capped_amount":"100.00"}}`,

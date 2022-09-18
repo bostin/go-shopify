@@ -21,7 +21,7 @@ func TestAppAuthorizeUrl(t *testing.T) {
 		nonce    string
 		expected string
 	}{
-		{"fooshop", "thenonce", "https://fooshop.myshopify.com/admin/oauth/authorize?client_id=apikey&redirect_uri=https%3A%2F%2Fexample.com%2Fcallback&scope=read_products&state=thenonce"},
+		{"fooshop", "thenonce", "https://" + testHost + "/admin/oauth/authorize?client_id=apikey&redirect_uri=https%3A%2F%2Fexample.com%2Fcallback&scope=read_products&state=thenonce"},
 	}
 
 	for _, c := range cases {
@@ -36,11 +36,11 @@ func TestAppGetAccessToken(t *testing.T) {
 	setup()
 	defer teardown()
 
-	httpmock.RegisterResponder("POST", "https://fooshop.myshopify.com/admin/oauth/access_token",
+	httpmock.RegisterResponder("POST", "https://"+testHost+"/admin/oauth/access_token",
 		httpmock.NewStringResponder(200, `{"access_token":"footoken"}`))
 
 	app.Client = client
-	token, err := app.GetAccessToken("fooshop", "foocode")
+	token, err := app.GetAccessToken(testShopName, "foocode")
 
 	if err != nil {
 		t.Fatalf("App.GetAccessToken(): %v", err)
@@ -59,7 +59,7 @@ func TestAppGetAccessTokenError(t *testing.T) {
 	// app.Client isn't specified so NewClient called
 	expectedError := errors.New("invalid_request")
 
-	token, err := app.GetAccessToken("fooshop", "")
+	token, err := app.GetAccessToken(testShopName, "")
 
 	if err == nil || err.Error() != expectedError.Error() {
 		t.Errorf("Expected error %s got error %s", expectedError.Error(), err.Error())
