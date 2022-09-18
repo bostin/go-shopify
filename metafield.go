@@ -42,7 +42,7 @@ type Metafield struct {
 	ID                int64       `json:"id,omitempty" bson:"id,omitempty"`
 	Key               string      `json:"key,omitempty" bson:"key,omitempty"`
 	Value             interface{} `json:"value,omitempty" bson:"value,omitempty"`
-	ValueType         string      `json:"value_type,omitempty" bson:"value_type,omitempty"` // @todo
+	ValueType         string      `json:"value_type,omitempty" bson:"value_type,omitempty"` // @removed at 2022-01
 	Type              string      `json:"type,omitempty" bson:"type,omitempty"`
 	Namespace         string      `json:"namespace,omitempty" bson:"namespace,omitempty"`
 	Description       string      `json:"description,omitempty" bson:"description,omitempty"`
