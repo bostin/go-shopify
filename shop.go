@@ -41,7 +41,9 @@ type Shop struct {
 	ProvinceCode                    string     `json:"province_code" bson:"province_code"`
 	Zip                             string     `json:"zip" bson:"zip"`
 	MoneyFormat                     string     `json:"money_format" bson:"money_format"`
+	MoneyInEmailsFormat             string     `json:"money_in_emails_format" bson:"money_in_emails_format"`
 	MoneyWithCurrencyFormat         string     `json:"money_with_currency_format" bson:"money_with_currency_format"`
+	MoneyWithCurrencyInEmailsFormat string     `json:"money_with_currency_in_emails_format" bson:"money_with_currency_in_emails_format"`
 	WeightUnit                      string     `json:"weight_unit" bson:"weight_unit"`
 	MyshopifyDomain                 string     `json:"myshopify_domain" bson:"myshopify_domain"`
 	PlanName                        string     `json:"plan_name" bson:"plan_name"`
@@ -51,23 +53,27 @@ type Shop struct {
 	PrimaryLocationId               int64      `json:"primary_location_id" bson:"primary_location_id"`
 	Timezone                        string     `json:"timezone" bson:"timezone"`
 	IanaTimezone                    string     `json:"iana_timezone" bson:"iana_timezone"`
-	ForceSSL                        bool       `json:"force_ssl" bson:"force_ssl"`
+	Finances                        bool       `json:"finances,omitempty" bson:"finances,omitempty"` // @deprecated
+	ForceSSL                        bool       `json:"force_ssl" bson:"force_ssl"`                   // @deprecated
 	TaxShipping                     bool       `json:"tax_shipping" bson:"tax_shipping"`
 	TaxesIncluded                   bool       `json:"taxes_included" bson:"taxes_included"`
 	HasStorefront                   bool       `json:"has_storefront" bson:"has_storefront"`
 	HasDiscounts                    bool       `json:"has_discounts" bson:"has_discounts"`
-	HasGiftcards                    bool       `json:"has_gift_cards" bson:"has_gift_cards"`
-	SetupRequire                    bool       `json:"setup_required" bson:"setup_require"`
+	HasGiftCards                    bool       `json:"has_gift_cards" bson:"has_gift_cards"`
+	SetupRequired                   bool       `json:"setup_required" bson:"setup_require"`
 	CountyTaxes                     bool       `json:"county_taxes" bson:"county_taxes"`
 	CheckoutAPISupported            bool       `json:"checkout_api_supported" bson:"checkout_api_supported"`
 	Source                          string     `json:"source" bson:"source"`
 	GoogleAppsDomain                string     `json:"google_apps_domain" bson:"google_apps_domain"`
 	GoogleAppsLoginEnabled          bool       `json:"google_apps_login_enabled" bson:"google_apps_login_enabled"`
-	MoneyInEmailsFormat             string     `json:"money_in_emails_format" bson:"money_in_emails_format"`
-	MoneyWithCurrencyInEmailsFormat string     `json:"money_with_currency_in_emails_format" bson:"money_with_currency_in_emails_format"`
 	EligibleForPayments             bool       `json:"eligible_for_payments" bson:"eligible_for_payments"`
+	EligibleForCarReaderGiveaway    bool       `json:"eligible_for_car_reader_giveaway,omitempty" bson:"eligible_for_car_reader_giveaway,omitempty"`
 	RequiresExtraPaymentsAgreement  bool       `json:"requires_extra_payments_agreement" bson:"requires_extra_payments_agreement"`
 	PreLaunchEnabled                bool       `json:"pre_launch_enabled" bson:"pre_launch_enabled"`
+	EnabledPresentmentCurrencies    []string   `json:"enabled_presentment_currencies,omitempty" bson:"enabled_presentment_currencies,omitempty"`
+	MultiLocationEnabled            bool       `json:"multi_location_enabled,omitempty" bson:"multi_location_enabled,omitempty"` // @deprecated
+	CookieConsentLevel              string     `json:"cookie_consent_level,omitempty" bson:"cookie_consent_level,omitempty"`
+	TransactionalSMSDisabled        bool       `json:"transactional_sms_disabled,omitempty" bson:"transactional_sms_disabled,omitempty"`
 }
 
 // Represents the result from the admin/shop.json endpoint

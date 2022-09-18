@@ -41,18 +41,13 @@ type OrderServiceOp struct {
 
 // A struct for all available order count options
 type OrderCountOptions struct {
-	Page              *int       `json:"page" url:"page,omitempty" bson:"page,omitempty"`
-	Limit             *int       `json:"limit" url:"limit,omitempty" bson:"limit,omitempty"`
-	SinceID           *int64     `json:"since_id" url:"since_id,omitempty" bson:"since_id,omitempty"`
 	CreatedAtMin      *time.Time `json:"created_at_min" url:"created_at_min,omitempty" bson:"created_at_min,omitempty"`
 	CreatedAtMax      *time.Time `json:"created_at_max" url:"created_at_max,omitempty" bson:"created_at_max,omitempty"`
 	UpdatedAtMin      *time.Time `json:"updated_at_min" url:"updated_at_min,omitempty" bson:"updated_at_min,omitempty"`
 	UpdatedAtMax      *time.Time `json:"updated_at_max" url:"updated_at_max,omitempty" bson:"updated_at_max,omitempty"`
-	Order             *string    `json:"order" url:"order,omitempty" bson:"order,omitempty"`
-	Fields            *string    `json:"fields" url:"fields,omitempty" bson:"fields,omitempty"`
-	Status            *string    `json:"status" url:"status,omitempty" bson:"status,omitempty"`
 	FinancialStatus   *string    `json:"financial_status" url:"financial_status,omitempty" bson:"financial_status,omitempty"`
 	FulfillmentStatus *string    `json:"fulfillment_status" url:"fulfillment_status,omitempty" bson:"fulfillment_status,omitempty"`
+	Status            *string    `json:"status" url:"status,omitempty" bson:"status,omitempty"`
 }
 
 // A struct for all available order list options.
@@ -71,6 +66,8 @@ type OrderListOptions struct {
 	SinceID           *int64     `json:"since_id,omitempty" url:"since_id,omitempty"`
 	Status            *string    `json:"status,omitempty" url:"status,omitempty"`
 	Page              *int       `json:"page,omitempty" url:"page,omitempty" bson:"page,omitempty"`
+	UpdatedAtMax      *time.Time `json:"updated_at_max,omitempty" url:"updated_at_max,omitempty"`
+	UpdatedAtMin      *time.Time `json:"updated_at_min,omitempty" url:"updated_at_min,omitempty"`
 }
 
 // A struct of all available order cancel options.
@@ -84,71 +81,106 @@ type OrderCancelOptions struct {
 	Refund   *Refund          `json:"refund,omitempty" bson:"refund,omitempty"`
 }
 
+type DiscountApplication struct {
+	AllocationMethod string `json:"allocation_method,omitempty" bson:"allocation_method,omitempty"`
+	Code             string `json:"code,omitempty" bson:"code,omitempty"`
+	Description      string `json:"description,omitempty" bson:"description,omitempty"`
+	TargetSelection  string `json:"target_selection,omitempty" bson:"target_selection,omitempty"`
+	TargetType       string `json:"target_type,omitempty" bson:"target_type,omitempty"`
+	Title            string `json:"title,omitempty" bson:"title,omitempty"`
+	Type             string `json:"type,omitempty" bson:"type,omitempty"`
+	Value            string `json:"value,omitempty" bson:"value,omitempty"`
+	ValueType        string `json:"value_type,omitempty" bson:"value_type,omitempty"`
+}
+
 // Order represents a Shopify order
 type Order struct {
-	ID                    int64            `json:"id,omitempty" bson:"id,omitempty"`
-	Name                  string           `json:"name,omitempty" bson:"name,omitempty"`
-	Email                 string           `json:"email,omitempty" bson:"email,omitempty"`
-	CreatedAt             *time.Time       `json:"created_at,omitempty" bson:"created_at,omitempty"`
-	UpdatedAt             *time.Time       `json:"updated_at,omitempty" bson:"updated_at,omitempty"`
-	CancelledAt           *time.Time       `json:"cancelled_at,omitempty" bson:"cancelled_at,omitempty"`
-	ClosedAt              *time.Time       `json:"closed_at,omitempty" bson:"closed_at,omitempty"`
-	ProcessedAt           *time.Time       `json:"processed_at,omitempty" bson:"processed_at,omitempty"`
-	Customer              *Customer        `json:"customer,omitempty" bson:"customer,omitempty"`
-	BillingAddress        *Address         `json:"billing_address,omitempty" bson:"billing_address,omitempty"`
-	ShippingAddress       *Address         `json:"shipping_address,omitempty" bson:"shipping_address,omitempty"`
-	Currency              string           `json:"currency,omitempty" bson:"currency,omitempty"`
-	TotalPrice            *decimal.Decimal `json:"total_price,omitempty" bson:"total_price,omitempty"`
-	SubtotalPrice         *decimal.Decimal `json:"subtotal_price,omitempty" bson:"subtotal_price,omitempty"`
-	TotalDiscounts        *decimal.Decimal `json:"total_discounts,omitempty" bson:"total_discounts,omitempty"`
-	TotalLineItemsPrice   *decimal.Decimal `json:"total_line_items_price,omitempty" bson:"total_line_items_price,omitempty"`
-	TaxesIncluded         bool             `json:"taxes_included,omitempty" bson:"taxes_included,omitempty"`
-	TotalTax              *decimal.Decimal `json:"total_tax,omitempty" bson:"total_tax,omitempty"`
-	TaxLines              []TaxLine        `json:"tax_lines,omitempty" bson:"tax_lines,omitempty"`
-	TotalWeight           int              `json:"total_weight,omitempty" bson:"total_weight,omitempty"`
-	FinancialStatus       string           `json:"financial_status,omitempty" bson:"financial_status,omitempty"`
-	Fulfillments          []Fulfillment    `json:"fulfillments,omitempty" bson:"fulfillments,omitempty"`
-	FulfillmentStatus     string           `json:"fulfillment_status,omitempty" bson:"fulfillment_status,omitempty"`
-	Token                 string           `json:"token,omitempty" bson:"token,omitempty"`
-	CartToken             string           `json:"cart_token,omitempty" bson:"cart_token,omitempty"`
-	Number                int              `json:"number,omitempty" bson:"number,omitempty"`
-	OrderNumber           int              `json:"order_number,omitempty" bson:"order_number,omitempty"`
-	Note                  string           `json:"note,omitempty" bson:"note,omitempty"`
-	Test                  bool             `json:"test,omitempty" bson:"test,omitempty"`
-	BrowserIp             string           `json:"browser_ip,omitempty" bson:"browser_ip,omitempty"`
-	BuyerAcceptsMarketing bool             `json:"buyer_accepts_marketing,omitempty" bson:"buyer_accepts_marketing,omitempty"`
-	CancelReason          string           `json:"cancel_reason,omitempty" bson:"cancel_reason,omitempty"`
-	NoteAttributes        []NoteAttribute  `json:"note_attributes,omitempty" bson:"note_attributes,omitempty"`
-	DiscountCodes         []DiscountCode   `json:"discount_codes,omitempty" bson:"discount_codes,omitempty"`
-	LineItems             []LineItem       `json:"line_items,omitempty" bson:"line_items,omitempty"`
-	ShippingLines         []ShippingLines  `json:"shipping_lines,omitempty" bson:"shipping_lines,omitempty"`
-	Transactions          []Transaction    `json:"transactions,omitempty" bson:"transactions,omitempty"`
-	AppID                 int              `json:"app_id,omitempty" bson:"app_id,omitempty"`
-	CustomerLocale        string           `json:"customer_locale,omitempty" bson:"customer_locale,omitempty"`
-	LandingSite           string           `json:"landing_site,omitempty" bson:"landing_site,omitempty"`
-	ReferringSite         string           `json:"referring_site,omitempty" bson:"referring_site,omitempty"`
-	SourceName            string           `json:"source_name,omitempty" bson:"source_name,omitempty"`
-	ClientDetails         *ClientDetails   `json:"client_details,omitempty" bson:"client_details,omitempty"`
-	Tags                  string           `json:"tags,omitempty" bson:"tags,omitempty"`
-	LocationId            int64            `json:"location_id,omitempty" bson:"location_id,omitempty"`
-	PaymentGatewayNames   []string         `json:"payment_gateway_names,omitempty" bson:"payment_gateway_names,omitempty"`
-	ProcessingMethod      string           `json:"processing_method,omitempty" bson:"processing_method,omitempty"`
-	Refunds               []Refund         `json:"refunds,omitempty" bson:"refunds,omitempty"`
-	UserId                int64            `json:"user_id,omitempty" bson:"user_id,omitempty"`
-	OrderStatusUrl        string           `json:"order_status_url,omitempty" bson:"order_status_url,omitempty"`
-	Gateway               string           `json:"gateway,omitempty" bson:"gateway,omitempty"`
-	Confirmed             bool             `json:"confirmed,omitempty" bson:"confirmed,omitempty"`
-	TotalPriceUSD         *decimal.Decimal `json:"total_price_usd,omitempty" bson:"total_price_usd,omitempty"`
-	CheckoutToken         string           `json:"checkout_token,omitempty" bson:"checkout_token,omitempty"`
-	Reference             string           `json:"reference,omitempty" bson:"reference,omitempty"`
-	SourceIdentifier      string           `json:"source_identifier,omitempty" bson:"source_identifier,omitempty"`
-	SourceURL             string           `json:"source_url,omitempty" bson:"source_url,omitempty"`
-	DeviceID              int64            `json:"device_id,omitempty" bson:"device_id,omitempty"`
-	Phone                 string           `json:"phone,omitempty" bson:"phone,omitempty"`
-	LandingSiteRef        string           `json:"landing_site_ref,omitempty" bson:"landing_site_ref,omitempty"`
-	CheckoutID            int64            `json:"checkout_id,omitempty" bson:"checkout_id,omitempty"`
-	ContactEmail          string           `json:"contact_email,omitempty" bson:"contact_email,omitempty"`
-	Metafields            []Metafield      `json:"metafields,omitempty" bson:"metafields,omitempty"`
+	ID                       int64                            `json:"id,omitempty" bson:"id,omitempty"`
+	Name                     string                           `json:"name,omitempty" bson:"name,omitempty"`
+	Email                    string                           `json:"email,omitempty" bson:"email,omitempty"`
+	CreatedAt                *time.Time                       `json:"created_at,omitempty" bson:"created_at,omitempty"`
+	UpdatedAt                *time.Time                       `json:"updated_at,omitempty" bson:"updated_at,omitempty"`
+	CancelledAt              *time.Time                       `json:"cancelled_at,omitempty" bson:"cancelled_at,omitempty"`
+	ClosedAt                 *time.Time                       `json:"closed_at,omitempty" bson:"closed_at,omitempty"`
+	ProcessedAt              *time.Time                       `json:"processed_at,omitempty" bson:"processed_at,omitempty"`
+	Customer                 *Customer                        `json:"customer,omitempty" bson:"customer,omitempty"`
+	BillingAddress           *Address                         `json:"billing_address,omitempty" bson:"billing_address,omitempty"`
+	ShippingAddress          *Address                         `json:"shipping_address,omitempty" bson:"shipping_address,omitempty"`
+	Currency                 string                           `json:"currency,omitempty" bson:"currency,omitempty"`
+	TotalPrice               *string                          `json:"total_price,omitempty" bson:"total_price,omitempty"`
+	TotalPriceSet            *AmountSet                       `json:"total_price_set,omitempty" bson:"total_price_set,omitempty"`
+	TotalShippingPriceSet    *AmountSet                       `json:"total_shipping_price_set,omitempty" bson:"total_shipping_price_set,omitempty"`
+	SubtotalPrice            *decimal.Decimal                 `json:"subtotal_price,omitempty" bson:"subtotal_price,omitempty"`
+	SubtotalPriceSet         *AmountSet                       `json:"subtotal_price_set,omitempty" bson:"subtotal_price_set,omitempty"`
+	TotalDiscounts           *string                          `json:"total_discounts,omitempty" bson:"total_discounts,omitempty"`
+	TotalDiscountsSet        *AmountSet                       `json:"total_discounts_set,omitempty" bson:"total_discounts_set,omitempty"`
+	TotalLineItemsPrice      *string                          `json:"total_line_items_price,omitempty" bson:"total_line_items_price,omitempty"`
+	TotalLineItemsPriceSet   *AmountSet                       `json:"total_line_items_price_set,omitempty" bson:"total_line_items_price_set,omitempty"`
+	TotalOutstanding         *string                          `json:"total_outstanding,omitempty" bson:"total_outstanding,omitempty"`
+	TotalTax                 *string                          `json:"total_tax,omitempty" bson:"total_tax,omitempty"`
+	TotalTaxSet              *AmountSet                       `json:"total_tax_set,omitempty" bson:"total_tax_set,omitempty"`
+	TotalTipReceived         string                           `json:"total_tip_received,omitempty" bson:"total_tip_received,omitempty"`
+	TaxLines                 []TaxLine                        `json:"tax_lines,omitempty" bson:"tax_lines,omitempty"`
+	TaxesIncluded            bool                             `json:"taxes_included,omitempty" bson:"taxes_included,omitempty"`
+	TotalWeight              int                              `json:"total_weight,omitempty" bson:"total_weight,omitempty"`
+	FinancialStatus          string                           `json:"financial_status,omitempty" bson:"financial_status,omitempty"`
+	Fulfillments             []Fulfillment                    `json:"fulfillments,omitempty" bson:"fulfillments,omitempty"`
+	FulfillmentStatus        string                           `json:"fulfillment_status,omitempty" bson:"fulfillment_status,omitempty"`
+	Token                    string                           `json:"token,omitempty" bson:"token,omitempty"`
+	CartToken                string                           `json:"cart_token,omitempty" bson:"cart_token,omitempty"`
+	Number                   int                              `json:"number,omitempty" bson:"number,omitempty"`
+	OrderNumber              int                              `json:"order_number,omitempty" bson:"order_number,omitempty"`
+	Note                     string                           `json:"note,omitempty" bson:"note,omitempty"`
+	NoteAttributes           []NoteAttribute                  `json:"note_attributes,omitempty" bson:"note_attributes,omitempty"`
+	Test                     bool                             `json:"test,omitempty" bson:"test,omitempty"`
+	BrowserIp                string                           `json:"browser_ip,omitempty" bson:"browser_ip,omitempty"`
+	BuyerAcceptsMarketing    bool                             `json:"buyer_accepts_marketing,omitempty" bson:"buyer_accepts_marketing,omitempty"`
+	CancelReason             string                           `json:"cancel_reason,omitempty" bson:"cancel_reason,omitempty"`
+	DiscountCodes            []DiscountCode                   `json:"discount_codes,omitempty" bson:"discount_codes,omitempty"`
+	LineItems                []LineItem                       `json:"line_items,omitempty" bson:"line_items,omitempty"`
+	ShippingLines            []ShippingLines                  `json:"shipping_lines,omitempty" bson:"shipping_lines,omitempty"`
+	Transactions             []Transaction                    `json:"transactions,omitempty" bson:"transactions,omitempty"`
+	AppID                    int                              `json:"app_id,omitempty" bson:"app_id,omitempty"`
+	CustomerLocale           string                           `json:"customer_locale,omitempty" bson:"customer_locale,omitempty"`
+	LandingSite              string                           `json:"landing_site,omitempty" bson:"landing_site,omitempty"`
+	ReferringSite            string                           `json:"referring_site,omitempty" bson:"referring_site,omitempty"`
+	SourceName               string                           `json:"source_name,omitempty" bson:"source_name,omitempty"`
+	SourceIdentifier         string                           `json:"source_identifier,omitempty" bson:"source_identifier,omitempty"`
+	SourceURL                string                           `json:"source_url,omitempty" bson:"source_url,omitempty"`
+	ClientDetails            *ClientDetails                   `json:"client_details,omitempty" bson:"client_details,omitempty"`
+	Tags                     string                           `json:"tags,omitempty" bson:"tags,omitempty"`
+	LocationId               int64                            `json:"location_id,omitempty" bson:"location_id,omitempty"`
+	ProcessingMethod         string                           `json:"processing_method,omitempty" bson:"processing_method,omitempty"`
+	Refunds                  []Refund                         `json:"refunds,omitempty" bson:"refunds,omitempty"`
+	UserId                   int64                            `json:"user_id,omitempty" bson:"user_id,omitempty"`
+	OrderStatusUrl           string                           `json:"order_status_url,omitempty" bson:"order_status_url,omitempty"`
+	Gateway                  string                           `json:"gateway,omitempty" bson:"gateway,omitempty"`                 // @deprecated
+	PaymentDetails           string                           `json:"payment_details,omitempty" bson:"payment_details,omitempty"` // @deprecated
+	PaymentTerms             PaymentTerm                      `json:"payment_terms,omitempty" bson:"payment_terms,omitempty"`
+	PaymentGatewayNames      []string                         `json:"payment_gateway_names,omitempty" bson:"payment_gateway_names,omitempty"`
+	Confirmed                bool                             `json:"confirmed,omitempty" bson:"confirmed,omitempty"`
+	TotalPriceUSD            *decimal.Decimal                 `json:"total_price_usd,omitempty" bson:"total_price_usd,omitempty"`
+	CheckoutToken            string                           `json:"checkout_token,omitempty" bson:"checkout_token,omitempty"`
+	Reference                string                           `json:"reference,omitempty" bson:"reference,omitempty"`
+	DeviceID                 int64                            `json:"device_id,omitempty" bson:"device_id,omitempty"`
+	Phone                    string                           `json:"phone,omitempty" bson:"phone,omitempty"`
+	LandingSiteRef           string                           `json:"landing_site_ref,omitempty" bson:"landing_site_ref,omitempty"`
+	CheckoutID               int64                            `json:"checkout_id,omitempty" bson:"checkout_id,omitempty"`
+	ContactEmail             string                           `json:"contact_email,omitempty" bson:"contact_email,omitempty"`
+	Metafields               []Metafield                      `json:"metafields,omitempty" bson:"metafields,omitempty"`
+	CurrentTotalDiscounts    string                           `json:"current_total_discounts,omitempty" bson:"current_total_discounts,omitempty"`
+	CurrentTotalDiscountsSet map[string]AmountSet             `json:"current_total_discounts_set,omitempty" bson:"current_total_discounts_set,omitempty"`
+	CurrentTotalDutiesSet    map[string]AmountSet             `json:"current_total_duties_set,omitempty" bson:"current_total_duties_set,omitempty"`
+	CurrentTotalPrice        string                           `json:"current_total_price,omitempty" bson:"current_total_price,omitempty"`
+	CurrentTotalPriceSet     map[string]AmountSet             `json:"current_total_price_set,omitempty" bson:"current_total_price_set,omitempty"`
+	CurrentSubtotalPrice     string                           `json:"current_subtotal_price,omitempty" bson:"current_subtotal_price,omitempty"`
+	CurrentSubtotalPriceSet  map[string]AmountSet             `json:"current_subtotal_price_set,omitempty" bson:"current_subtotal_price_set,omitempty"`
+	CurrentTotalTax          string                           `json:"current_total_tax,omitempty" bson:"current_total_tax,omitempty"`
+	CurrentTotalTaxSet       map[string]AmountSet             `json:"current_total_tax_set,omitempty" bson:"current_total_tax_set,omitempty"`
+	DiscountApplications     map[string][]DiscountApplication `json:"discount_applications,omitempty" bson:"discount_applications,omitempty"`
+	EstimatedTaxes           bool                             `json:"estimated_taxes,omitempty" bson:"estimated_taxes,omitempty"`
+	OriginalTotalDutiesSet   map[string]AmountSet             `json:"original_total_duties_set,omitempty" bson:"original_total_duties_set,omitempty"`
+	PresentmentCurrency      string                           `json:"presentment_currency,omitempty" bson:"presentment_currency,omitempty"`
 }
 
 type Address struct {
@@ -174,6 +206,10 @@ type DiscountCode struct {
 	Amount *decimal.Decimal `json:"amount,omitempty" bson:"amount,omitempty"`
 	Code   string           `json:"code,omitempty" bson:"code,omitempty"`
 	Type   string           `json:"type,omitempty" bson:"type,omitempty"`
+}
+
+type Duty struct {
+	// @todo
 }
 
 type LineItem struct {
@@ -204,6 +240,29 @@ type LineItem struct {
 	DestinationLocation        *Address              `json:"destination_location,omitempty" bson:"destination_location,omitempty"`
 	AppliedDiscount            *AppliedDiscount      `json:"applied_discount,omitempty" bson:"applied_discount,omitempty"`
 	DiscountAllocations        []DiscountAllocations `json:"discount_allocations,omitempty" bson:"discount_allocations,omitempty"`
+	Custom                     bool                  `json:"custom,omitempty" bson:"custom,omitempty"`
+
+	// only for fulfillment
+	FulfillmentLineItemID int64  `json:"fulfillment_line_item_id,omitempty" bson:"fulfillment_line_item_id,omitempty"`
+	Duties                []Duty `json:"duties,omitempty" bson:"duties,omitempty"`
+}
+
+type PaymentTerm struct {
+	Amount           *decimal.Decimal  `json:"amount,omitempty" bson:"amount,omitempty"`
+	Currency         string            `json:"currency,omitempty" bson:"currency,omitempty"`
+	PaymentTermsName string            `json:"payment_terms_name,omitempty" bson:"payment_terms_name,omitempty"`
+	PaymentTermsType string            `json:"payment_terms_type,omitempty" bson:"payment_terms_type,omitempty"`
+	DueInDays        int               `json:"due_in_days,omitempty" bson:"due_in_days,omitempty"`
+	PaymentSchedules []PaymentSchedule `json:"payment_schedules,omitempty" bson:"payment_schedules,omitempty"`
+}
+
+type PaymentSchedule struct {
+	Amount                *decimal.Decimal `json:"amount,omitempty" bson:"amount,omitempty"`
+	Currency              string           `json:"currency,omitempty" bson:"currency,omitempty"`
+	IssuedAt              *time.Time       `json:"issued_at,omitempty" bson:"issued_at,omitempty"`
+	DueAt                 *time.Time       `json:"due_at,omitempty" bson:"due_at,omitempty"`
+	CompletedAt           *time.Time       `json:"completed_at,omitempty" bson:"completed_at,omitempty"`
+	ExpectedPaymentMethod string           `json:"expected_payment_method,omitempty" bson:"expected_payment_method,omitempty"`
 }
 
 type DiscountAllocations struct {
@@ -288,17 +347,27 @@ type PaymentDetails struct {
 	CreditCardCompany string `json:"credit_card_company,omitempty" bson:"credit_card_company,omitempty"`
 }
 
+type ShippingLine struct {
+	Custom bool             `json:"custom,omitempty" bson:"custom,omitempty"`
+	Handle string           `json:"handle,omitempty" bson:"handle,omitempty"`
+	Title  string           `json:"title,omitempty" bson:"title,omitempty"`
+	Price  *decimal.Decimal `json:"price,omitempty" bson:"price,omitempty"`
+}
+
 type ShippingLines struct {
-	ID                            int64            `json:"id,omitempty" bson:"id,omitempty"`
-	Title                         string           `json:"title,omitempty" bson:"title,omitempty"`
-	Price                         *decimal.Decimal `json:"price,omitempty" bson:"price,omitempty"`
-	Code                          string           `json:"code,omitempty" bson:"code,omitempty"`
-	Source                        string           `json:"source,omitempty" bson:"source,omitempty"`
-	Phone                         string           `json:"phone,omitempty" bson:"phone,omitempty"`
-	RequestedFulfillmentServiceID string           `json:"requested_fulfillment_service_id,omitempty" bson:"requested_fulfillment_service_id,omitempty"`
-	DeliveryCategory              string           `json:"delivery_category,omitempty" bson:"delivery_category,omitempty"`
-	CarrierIdentifier             string           `json:"carrier_identifier,omitempty" bson:"carrier_identifier,omitempty"`
-	TaxLines                      []TaxLine        `json:"tax_lines,omitempty" bson:"tax_lines,omitempty"`
+	ID                            int64                `json:"id,omitempty" bson:"id,omitempty"`
+	Title                         string               `json:"title,omitempty" bson:"title,omitempty"`
+	Price                         *decimal.Decimal     `json:"price,omitempty" bson:"price,omitempty"`
+	PriceSet                      map[string]AmountSet `json:"price_set,omitempty" bson:"price_set,omitempty"`
+	Code                          string               `json:"code,omitempty" bson:"code,omitempty"`
+	Source                        string               `json:"source,omitempty" bson:"source,omitempty"`
+	Phone                         string               `json:"phone,omitempty" bson:"phone,omitempty"`
+	RequestedFulfillmentServiceID string               `json:"requested_fulfillment_service_id,omitempty" bson:"requested_fulfillment_service_id,omitempty"`
+	DeliveryCategory              string               `json:"delivery_category,omitempty" bson:"delivery_category,omitempty"`
+	CarrierIdentifier             string               `json:"carrier_identifier,omitempty" bson:"carrier_identifier,omitempty"`
+	TaxLines                      []TaxLine            `json:"tax_lines,omitempty" bson:"tax_lines,omitempty"`
+	DiscountedPrice               string               `json:"discounted_price,omitempty" bson:"discounted_price,omitempty"`
+	DiscountedPriceSet            map[string]AmountSet `json:"discounted_price_set,omitempty" bson:"discounted_price_set,omitempty"`
 }
 
 // UnmarshalJSON custom unmarshaller for ShippingLines implemented to handle requested_fulfillment_service_id being
@@ -326,9 +395,10 @@ func (sl *ShippingLines) UnmarshalJSON(data []byte) error {
 }
 
 type TaxLine struct {
-	Title string           `json:"title,omitempty" bson:"title,omitempty"`
-	Price *decimal.Decimal `json:"price,omitempty" bson:"price,omitempty"`
-	Rate  *decimal.Decimal `json:"rate,omitempty" bson:"rate,omitempty"`
+	Title         string           `json:"title,omitempty" bson:"title,omitempty"`
+	Price         *decimal.Decimal `json:"price,omitempty" bson:"price,omitempty"`
+	Rate          *decimal.Decimal `json:"rate,omitempty" bson:"rate,omitempty"`
+	ChannelLiable *bool            `json:"channel_liable,omitempty" bson:"channel_liable,omitempty"`
 }
 
 type Transaction struct {
@@ -362,15 +432,35 @@ type ClientDetails struct {
 	UserAgent      string `json:"user_agent,omitempty" bson:"user_agent,omitempty"`
 }
 
+type OrderAdjustment struct {
+	Id           int64      `json:"id,omitempty" bson:"id,omitempty"`
+	OrderId      int64      `json:"order_id,omitempty" bson:"order_id,omitempty"`
+	RefundId     int64      `json:"refund_id,omitempty" bson:"refund_id,omitempty"`
+	Amount       string     `json:"amount,omitempty" bson:"amount,omitempty"`
+	TaxAmount    string     `json:"tax_amount,omitempty" bson:"tax_amount,omitempty"`
+	Kind         string     `json:"kind,omitempty" bson:"kind,omitempty"`
+	Reason       string     `json:"reason,omitempty" bson:"reason,omitempty"`
+	AmountSet    *AmountSet `json:"amount_set,omitempty" bson:"amount_set,omitempty"`
+	TaxAmountSet *AmountSet `json:"tax_amount_set,omitempty" bson:"tax_amount_set,omitempty"`
+}
+
+type RefundDuty struct {
+	DutyId     int64  `json:"duty_id,omitempty" bson:"duty_id,omitempty"`
+	RefundType string `json:"refund_type,omitempty" bson:"refund_type,omitempty"`
+}
+
 type Refund struct {
-	Id              int64            `json:"id,omitempty" bson:"id,omitempty"`
-	OrderId         int64            `json:"order_id,omitempty" bson:"order_id,omitempty"`
-	CreatedAt       *time.Time       `json:"created_at,omitempty" bson:"created_at,omitempty"`
-	Note            string           `json:"note,omitempty" bson:"note,omitempty"`
-	Restock         bool             `json:"restock,omitempty" bson:"restock,omitempty"`
-	UserId          int64            `json:"user_id,omitempty" bson:"user_id,omitempty"`
-	RefundLineItems []RefundLineItem `json:"refund_line_items,omitempty" bson:"refund_line_items,omitempty"`
-	Transactions    []Transaction    `json:"transactions,omitempty" bson:"transactions,omitempty"`
+	Id               int64             `json:"id,omitempty" bson:"id,omitempty"`
+	OrderId          int64             `json:"order_id,omitempty" bson:"order_id,omitempty"`
+	CreatedAt        *time.Time        `json:"created_at,omitempty" bson:"created_at,omitempty"`
+	Note             *string           `json:"note,omitempty" bson:"note,omitempty"`
+	Restock          bool              `json:"restock,omitempty" bson:"restock,omitempty"` // @deprecated
+	UserId           *int64            `json:"user_id,omitempty" bson:"user_id,omitempty"`
+	ProcessedAt      *time.Time        `json:"processed_at,omitempty" bson:"processed_at,omitempty"`
+	RefundLineItems  []RefundLineItem  `json:"refund_line_items,omitempty" bson:"refund_line_items,omitempty"`
+	Transactions     []Transaction     `json:"transactions,omitempty" bson:"transactions,omitempty"`
+	OrderAdjustments []OrderAdjustment `json:"order_adjustments,omitempty" bson:"order_adjustments,omitempty"`
+	RefundDuties     []RefundDuty      `json:"refund_duties,omitempty" bson:"refund_duties,omitempty"`
 }
 
 type RefundLineItem struct {

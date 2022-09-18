@@ -140,7 +140,7 @@ func TestDraftOrderCount(t *testing.T) {
 	}
 
 	status := "open"
-	cnt, err = client.DraftOrder.Count(DraftOrderCountOptions{Status: status})
+	cnt, err = client.DraftOrder.Count(DraftOrderCountOptions{Status: PString(status)})
 	if err != nil {
 		t.Errorf("DraftOrder.Count returned an error: %v", err)
 	}
@@ -185,9 +185,9 @@ func TestDraftOrderListOptions(t *testing.T) {
 		httpmock.NewBytesResponder(200, loadFixture("draft_orders.json")))
 
 	options := DraftOrderListOptions{
-		Limit:  250,
-		Status: "any",
-		Fields: "id,name",
+		Limit:  PInt(250),
+		Status: PString("any"),
+		//		Fields: "id,name",
 	}
 
 	draftOrders, err := client.DraftOrder.List(options)

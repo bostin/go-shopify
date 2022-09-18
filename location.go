@@ -40,7 +40,7 @@ type Location struct {
 	// The two-letter code (ISO 3166-1 alpha-2 format) corresponding to country the location is in.
 	CountryCode string `json:"country_code" bson:"country_code"`
 
-	CountryName string `json:"country_name" bson:"country_name"`
+	//	CountryName string `json:"country_name" bson:"country_name"`
 
 	// The date and time (ISO 8601 format) when the location was created.
 	CreatedAt time.Time `json:"created_at" bson:"created_at"`

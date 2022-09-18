@@ -7,6 +7,23 @@ import (
 
 const webhooksBasePath = "webhooks"
 
+type WebhookCountOptions struct {
+	Address *string `json:"address,omitempty" url:"address,omitempty"`
+	Topic   *string `json:"topic,omitempty" url:"topic,omitempty"`
+}
+
+type WebhookListOptions struct {
+	Address      *string    `json:"address,omitempty" url:"address,omitempty"`
+	CreatedAtMax *time.Time `json:"created_at_max,omitempty" url:"created_at_max,omitempty"`
+	CreatedAtMin *time.Time `json:"created_at_min,omitempty" url:"created_at_min,omitempty"`
+	Fields       []string   `json:"fields,omitempty" url:"fields,omitempty"`
+	Limit        *int       `json:"limit,omitempty" url:"limit,omitempty"`
+	SinceId      *int64     `json:"since_id,omitempty" url:"since_id,omitempty"`
+	Topic        *string    `json:"topic,omitempty" url:"topic,omitempty"`
+	UpdatedAtMax *time.Time `json:"updated_at_max,omitempty" url:"updated_at_max,omitempty"`
+	UpdatedAtMin *time.Time `json:"updated_at_min,omitempty" url:"updated_at_min,omitempty"`
+}
+
 // WebhookService is an interface for interfacing with the webhook endpoints of
 // the Shopify API.
 // See: https://help.shopify.com/api/reference/webhook
@@ -27,14 +44,16 @@ type WebhookServiceOp struct {
 
 // Webhook represents a Shopify webhook
 type Webhook struct {
-	ID                  int64      `json:"id" bson:"id"`
-	Address             string     `json:"address" bson:"address"`
-	Topic               string     `json:"topic" bson:"topic"`
-	Format              string     `json:"format" bson:"format"`
-	CreatedAt           *time.Time `json:"created_at,omitempty" bson:"created_at"`
-	UpdatedAt           *time.Time `json:"updated_at,omitempty" bson:"updated_at"`
-	Fields              []string   `json:"fields" bson:"fields"`
-	MetafieldNamespaces []string   `json:"metafield_namespaces" bson:"metafield_namespaces"`
+	ID                        int64      `json:"id,omitempty" bson:"id,omitempty"`
+	ApiVersion                string     `json:"api_version,omitempty" bson:"api_version,omitempty"`
+	Address                   string     `json:"address,omitempty" bson:"address,omitempty"`
+	Topic                     string     `json:"topic,omitempty" bson:"topic,omitempty"`
+	Format                    string     `json:"format,omitempty" bson:"format,omitempty"`
+	CreatedAt                 *time.Time `json:"created_at,omitempty" bson:"created_at,omitempty"`
+	UpdatedAt                 *time.Time `json:"updated_at,omitempty" bson:"updated_at,omitempty"`
+	Fields                    []string   `json:"fields,omitempty" bson:"fields,omitempty"`
+	MetafieldNamespaces       []string   `json:"metafield_namespaces,omitempty" bson:"metafield_namespaces,omitempty"`
+	PrivateMetafieldNamespace []string   `json:"private_metafield_namespace,omitempty" bson:"private_metafield_namespace,omitempty"`
 }
 
 // WebhookOptions can be used for filtering webhooks on a List request.

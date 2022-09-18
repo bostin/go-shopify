@@ -50,8 +50,11 @@ type DraftOrder struct {
 	InvoiceSentAt   *time.Time       `json:"invoice_sent_at,omitempty" bson:"invoice_sent_at,omitempty"`
 	InvoiceURL      string           `json:"invoice_url,omitempty" bson:"invoice_url,omitempty"`
 	LineItems       []LineItem       `json:"line_items,omitempty" bson:"line_items,omitempty"`
-	ShippingLine    *ShippingLines   `json:"shipping_line,omitempty" bson:"shipping_line,omitempty"`
+	ShippingLine    *ShippingLine    `json:"shipping_line,omitempty" bson:"shipping_line,omitempty"`
+	SourceName      string           `json:"source_name,omitempty" bson:"source_name,omitempty"`
 	Tags            string           `json:"tags,omitempty" bson:"tags,omitempty"`
+	TaxExempt       bool             `json:"tax_exempt,omitempty" bson:"tax_exempt,omitempty"`
+	TaxExemptions   []string         `json:"tax_exemptions,omitempty" bson:"tax_exemptions,omitempty"`
 	TaxLines        []TaxLine        `json:"tax_lines,omitempty" bson:"tax_lines,omitempty"`
 	AppliedDiscount *AppliedDiscount `json:"applied_discount,omitempty" bson:"applied_discount,omitempty"`
 	TaxesIncluded   bool             `json:"taxes_included,omitempty" bson:"taxes_included,omitempty"`
@@ -62,6 +65,7 @@ type DraftOrder struct {
 	CreatedAt       *time.Time       `json:"created_at,omitempty" bson:"created_at,omitempty"`
 	UpdatedAt       *time.Time       `json:"updated_at,omitempty" bson:"updated_at,omitempty"`
 	Status          string           `json:"status,omitempty" bson:"status,omitempty"`
+	PaymentTerms    []PaymentTerm    `json:"payment_terms,omitempty" bson:"payment_terms,omitempty"`
 	// only in request to flag using the customer's default address
 	UseCustomerDefaultAddress bool `json:"use_customer_default_address,omitempty" bson:"use_customer_default_address,omitempty"`
 }
@@ -99,22 +103,24 @@ type DraftOrderInvoiceResource struct {
 // DraftOrderListOptions represents the possible options that can be used
 // to further query the list draft orders endpoint
 type DraftOrderListOptions struct {
-	Fields       string     `url:"fields,omitempty" bson:"fields,omitempty"`
-	Limit        int        `url:"limit,omitempty" bson:"limit,omitempty"`
-	SinceID      int64      `url:"since_id,omitempty" bson:"since_id,omitempty"`
+	Fields       *string    `url:"fields,omitempty" bson:"fields,omitempty"`
+	Limit        *int       `url:"limit,omitempty" bson:"limit,omitempty"`
+	SinceID      *int64     `url:"since_id,omitempty" bson:"since_id,omitempty"`
 	UpdatedAtMin *time.Time `url:"updated_at_min,omitempty" bson:"updated_at_min,omitempty"`
 	UpdatedAtMax *time.Time `url:"updated_at_max,omitempty" bson:"updated_at_max,omitempty"`
-	IDs          string     `url:"ids,omitempty" bson:"ids,omitempty"`
-	Status       string     `url:"status,omitempty" bson:"status,omitempty"`
+	IDs          *string    `url:"ids,omitempty" bson:"ids,omitempty"`
+	Status       *string    `url:"status,omitempty" bson:"status,omitempty"`
 }
 
 // DraftOrderCountOptions represents the possible options to the count draft orders endpoint
 type DraftOrderCountOptions struct {
-	Fields  string `url:"fields,omitempty" bson:"fields,omitempty"`
-	Limit   int    `url:"limit,omitempty" bson:"limit,omitempty"`
-	SinceID int64  `url:"since_id,omitempty" bson:"since_id,omitempty"`
-	IDs     string `url:"ids,omitempty" bson:"ids,omitempty"`
-	Status  string `url:"status,omitempty" bson:"status,omitempty"`
+	// Fields *string `url:"fields,omitempty" bson:"fields,omitempty"`
+	// Limit   int    `url:"limit,omitempty" bson:"limit,omitempty"`
+	//IDs     string `url:"ids,omitempty" bson:"ids,omitempty"`
+	SinceID      *int64     `url:"since_id,omitempty" bson:"since_id,omitempty"`
+	Status       *string    `url:"status,omitempty" bson:"status,omitempty"`
+	UpdatedAtMin *time.Time `url:"updated_at_min,omitempty" bson:"updated_at_min,omitempty"`
+	UpdatedAtMax *time.Time `url:"updated_at_max,omitempty" bson:"updated_at_max,omitempty"`
 }
 
 // Create draft order

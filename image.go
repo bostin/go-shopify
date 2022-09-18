@@ -33,9 +33,12 @@ type Image struct {
 	Width      int        `json:"width,omitempty" bson:"width,omitempty"`
 	Height     int        `json:"height,omitempty" bson:"height,omitempty"`
 	Src        string     `json:"src,omitempty" bson:"src,omitempty"`
-	Attachment string     `json:"attachment,omitempty" bson:"attachment,omitempty"`
-	Filename   string     `json:"filename,omitempty" bson:"filename,omitempty"`
 	VariantIds []int64    `json:"variant_ids,omitempty" bson:"variant_ids,omitempty"`
+
+	// only for smartcollection
+	Alt        string `json:"alt,omitempty" bson:"alt,omitempty"`
+	Attachment string `json:"attachment,omitempty" bson:"attachment,omitempty"`
+	//Filename   string     `json:"filename,omitempty" bson:"filename,omitempty"`
 }
 
 // ImageResource represents the result form the products/X/images/Y.json endpoint

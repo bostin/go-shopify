@@ -34,29 +34,62 @@ type CustomerServiceOp struct {
 	client *Client
 }
 
+type CustomerListOptions struct {
+	CreatedAtMax *time.Time `json:"created_at_max,omitempty" url:"created_at_max,omitempty"`
+	CreatedAtMin *time.Time `json:"created_at_min,omitempty" url:"created_at_min,omitempty"`
+	Fields       *string    `json:"fields,omitempty" url:"fields,omitempty"`
+	Ids          *string    `json:"ids,omitempty" url:"ids,omitempty"`
+	Limit        *int       `json:"limit,omitempty" url:"limit,omitempty"`
+	SinceId      *int64     `json:"since_id,omitempty" url:"since_id,omitempty"`
+	UpdatedAtMax *time.Time `json:"updated_at_max,omitempty" url:"updated_at_max,omitempty"`
+	UpdatedAtMin *time.Time `json:"updated_at_min,omitempty" url:"updated_at_min,omitempty"`
+}
+
+type EmailMarketingConsent struct {
+	State            string     `json:"state,omitempty" bson:"state,omitempty"`
+	OptInLevel       string     `json:"opt_in_level,omitempty" bson:"opt_in_level,omitempty"`
+	ConsentUpdatedAt *time.Time `json:"consent_updated_at,omitempty" bson:"consent_updated_at,omitempty"`
+}
+
+type SmsMarketingConsent struct {
+	State                string     `json:"state,omitempty" bson:"state,omitempty"`
+	OptInLevel           string     `json:"opt_in_level,omitempty" bson:"opt_in_level,omitempty"`
+	ConsentUpdatedAt     *time.Time `json:"consent_updated_at,omitempty" bson:"consent_updated_at,omitempty"`
+	ConsentCollectedFrom string     `json:"consent_collected_from,omitempty" bson:"consent_collected_from,omitempty"`
+}
+
 // Customer represents a Shopify customer
 type Customer struct {
-	ID                  int64              `json:"id,omitempty" bson:"id,omitempty"`
-	Email               string             `json:"email,omitempty" bson:"email,omitempty"`
-	FirstName           string             `json:"first_name,omitempty" bson:"first_name,omitempty"`
-	LastName            string             `json:"last_name,omitempty" bson:"last_name,omitempty"`
-	State               string             `json:"state,omitempty" bson:"state,omitempty"`
-	Note                string             `json:"note,omitempty" bson:"note,omitempty"`
-	VerifiedEmail       bool               `json:"verified_email,omitempty" bson:"verified_email,omitempty"`
-	MultipassIdentifier string             `json:"multipass_identifier,omitempty" bson:"multipass_identifier,omitempty"`
-	OrdersCount         int                `json:"orders_count,omitempty" bson:"orders_count,omitempty"`
-	TaxExempt           bool               `json:"tax_exempt,omitempty" bson:"tax_exempt,omitempty"`
-	TotalSpent          *decimal.Decimal   `json:"total_spent,omitempty" bson:"total_spent,omitempty"`
-	Phone               string             `json:"phone,omitempty" bson:"phone,omitempty"`
-	Tags                string             `json:"tags,omitempty" bson:"tags,omitempty"`
-	LastOrderId         int64              `json:"last_order_id,omitempty" bson:"last_order_id,omitempty"`
-	LastOrderName       string             `json:"last_order_name,omitempty" bson:"last_order_name,omitempty"`
-	AcceptsMarketing    bool               `json:"accepts_marketing,omitempty" bson:"accepts_marketing,omitempty"`
-	DefaultAddress      *CustomerAddress   `json:"default_address,omitempty" bson:"default_address,omitempty"`
-	Addresses           []*CustomerAddress `json:"addresses,omitempty" bson:"addresses,omitempty"`
-	CreatedAt           *time.Time         `json:"created_at,omitempty" bson:"created_at,omitempty"`
-	UpdatedAt           *time.Time         `json:"updated_at,omitempty" bson:"updated_at,omitempty"`
-	Metafields          []Metafield        `json:"metafields,omitempty" bson:"metafields,omitempty"`
+	ID                        int64                  `json:"id,omitempty" bson:"id,omitempty"`
+	Email                     string                 `json:"email,omitempty" bson:"email,omitempty"`
+	FirstName                 string                 `json:"first_name,omitempty" bson:"first_name,omitempty"`
+	LastName                  string                 `json:"last_name,omitempty" bson:"last_name,omitempty"`
+	State                     string                 `json:"state,omitempty" bson:"state,omitempty"`
+	Note                      string                 `json:"note,omitempty" bson:"note,omitempty"`
+	VerifiedEmail             bool                   `json:"verified_email,omitempty" bson:"verified_email,omitempty"`
+	MultipassIdentifier       string                 `json:"multipass_identifier,omitempty" bson:"multipass_identifier,omitempty"`
+	OrdersCount               int                    `json:"orders_count,omitempty" bson:"orders_count,omitempty"`
+	TaxExempt                 bool                   `json:"tax_exempt,omitempty" bson:"tax_exempt,omitempty"`
+	TaxExemptions             []string               `json:"tax_exemptions,omitempty" bson:"tax_exemptions,omitempty"`
+	TotalSpent                *decimal.Decimal       `json:"total_spent,omitempty" bson:"total_spent,omitempty"`
+	Phone                     string                 `json:"phone,omitempty" bson:"phone,omitempty"`
+	Tags                      string                 `json:"tags,omitempty" bson:"tags,omitempty"`
+	LastOrderId               int64                  `json:"last_order_id,omitempty" bson:"last_order_id,omitempty"`
+	LastOrderName             string                 `json:"last_order_name,omitempty" bson:"last_order_name,omitempty"`
+	AcceptsMarketing          bool                   `json:"accepts_marketing,omitempty" bson:"accepts_marketing,omitempty"`                       //deprecated!! As of API version 2022-04
+	AcceptsMarketingUpdatedAt *time.Time             `json:"accepts_marketing_updated_at,omitempty" bson:"accepts_marketing_updated_at,omitempty"` //deprecated!! As of API version 2022-04
+	DefaultAddress            *CustomerAddress       `json:"default_address,omitempty" bson:"default_address,omitempty"`
+	Addresses                 []*CustomerAddress     `json:"addresses,omitempty" bson:"addresses,omitempty"`
+	CreatedAt                 *time.Time             `json:"created_at,omitempty" bson:"created_at,omitempty"`
+	UpdatedAt                 *time.Time             `json:"updated_at,omitempty" bson:"updated_at,omitempty"`
+	Metafield                 *Metafield             `json:"metafield,omitempty" bson:"metafield,omitempty"`
+	Currency                  string                 `json:"currency,omitempty" bson:"currency,omitempty"`
+	EmailMarketingConsent     *EmailMarketingConsent `json:"email_marketing_consent,omitempty" bson:"email_marketing_consent,omitempty"`
+	MarketingOptInLevel       string                 `json:"marketing_opt_in_level,omitempty" bson:"marketing_opt_in_level,omitempty"` //deprecated!! As of API version 2022-04
+	Password                  string                 `json:"password,omitempty" bson:"password,omitempty"`
+	PasswordConfirmation      string                 `json:"password_confirmation,omitempty" bson:"password_confirmation,omitempty"`
+	SmsMarketingConsent       *SmsMarketingConsent   `json:"sms_marketing_consent,omitempty" bson:"sms_marketing_consent,omitempty"`
+	//	Metafields                []Metafield        `json:"metafields,omitempty" bson:"metafields,omitempty"`
 }
 
 // Represents the result from the customers/X.json endpoint

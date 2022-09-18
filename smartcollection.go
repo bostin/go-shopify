@@ -17,6 +17,7 @@ type SmartCollectionCountOptions struct {
 	UpdatedAtMax    *time.Time `json:"updated_at_max"  url:"updated_at_max,omitempty"`
 	UpdatedAtMin    *time.Time `json:"updated_at_min"  url:"updated_at_min,omitempty"`
 }
+
 type SmartCollectionListOptions struct {
 	Fields          *string    `json:"fields,omitempty" url:"fields,omitempty"`
 	Handle          *string    `json:"handle,omitempty" url:"handle,omitempty"`

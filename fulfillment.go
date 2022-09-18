@@ -43,22 +43,25 @@ type FulfillmentServiceOp struct {
 
 // Fulfillment represents a Shopify fulfillment.
 type Fulfillment struct {
-	ID              int64      `json:"id,omitempty" bson:"id,omitempty"`
-	OrderID         int64      `json:"order_id,omitempty" bson:"order_id,omitempty"`
-	LocationID      int64      `json:"location_id,omitempty" bson:"location_id,omitempty"`
-	Status          string     `json:"status,omitempty" bson:"status,omitempty"`
-	CreatedAt       *time.Time `json:"created_at,omitempty" bson:"created_at,omitempty"`
-	Service         string     `json:"service,omitempty" bson:"service,omitempty"`
-	UpdatedAt       *time.Time `json:"updated_at,omitempty" bson:"updated_at,omitempty"`
-	TrackingCompany string     `json:"tracking_company,omitempty" bson:"tracking_company,omitempty"`
-	ShipmentStatus  string     `json:"shipment_status,omitempty" bson:"shipment_status,omitempty"`
-	TrackingNumber  string     `json:"tracking_number,omitempty" bson:"tracking_number,omitempty"`
-	TrackingNumbers []string   `json:"tracking_numbers,omitempty" bson:"tracking_numbers,omitempty"`
-	TrackingUrl     string     `json:"tracking_url,omitempty" bson:"tracking_url,omitempty"`
-	TrackingUrls    []string   `json:"tracking_urls,omitempty" bson:"tracking_urls,omitempty"`
-	Receipt         Receipt    `json:"receipt,omitempty" bson:"receipt,omitempty"`
-	LineItems       []LineItem `json:"line_items,omitempty" bson:"line_items,omitempty"`
-	NotifyCustomer  bool       `json:"notify_customer" bson:"notify_customer"`
+	ID                         int64      `json:"id,omitempty" bson:"id,omitempty"`
+	OrderID                    int64      `json:"order_id,omitempty" bson:"order_id,omitempty"`
+	LocationID                 int64      `json:"location_id,omitempty" bson:"location_id,omitempty"`
+	Status                     string     `json:"status,omitempty" bson:"status,omitempty"`
+	CreatedAt                  *time.Time `json:"created_at,omitempty" bson:"created_at,omitempty"`
+	Service                    string     `json:"service,omitempty" bson:"service,omitempty"`
+	UpdatedAt                  *time.Time `json:"updated_at,omitempty" bson:"updated_at,omitempty"`
+	TrackingCompany            string     `json:"tracking_company,omitempty" bson:"tracking_company,omitempty"`
+	ShipmentStatus             string     `json:"shipment_status,omitempty" bson:"shipment_status,omitempty"`
+	TrackingNumber             string     `json:"tracking_number,omitempty" bson:"tracking_number,omitempty"`
+	TrackingNumbers            []string   `json:"tracking_numbers,omitempty" bson:"tracking_numbers,omitempty"`
+	TrackingUrl                string     `json:"tracking_url,omitempty" bson:"tracking_url,omitempty"`
+	TrackingUrls               []string   `json:"tracking_urls,omitempty" bson:"tracking_urls,omitempty"`
+	Receipt                    Receipt    `json:"receipt,omitempty" bson:"receipt,omitempty"`
+	LineItems                  []LineItem `json:"line_items,omitempty" bson:"line_items,omitempty"`
+	NotifyCustomer             bool       `json:"notify_customer" bson:"notify_customer"`
+	Name                       string     `json:"name,omitempty" bson:"name,omitempty"`
+	OriginAddress              *Address   `json:"origin_address,omitempty" bson:"origin_address,omitempty"`
+	VariantInventoryManagement string     `json:"variant_inventory_management,omitempty" bson:"variant_inventory_management,omitempty"`
 }
 
 // Receipt represents a Shopify receipt.

@@ -56,18 +56,18 @@ type CustomCollectionServiceOp struct {
 
 // CustomCollection represents a Shopify custom collection.
 type CustomCollection struct {
-	ID             int64       `json:"id" bson:"id"`
-	Handle         string      `json:"handle" bson:"handle"`
-	Title          string      `json:"title" bson:"title"`
-	UpdatedAt      *time.Time  `json:"updated_at" bson:"updated_at"`
-	BodyHTML       string      `json:"body_html" bson:"body_html"`
-	SortOrder      string      `json:"sort_order" bson:"sort_order"`
-	TemplateSuffix string      `json:"template_suffix" bson:"template_suffix"`
-	Image          Image       `json:"image" bson:"image"`
-	Published      bool        `json:"published" bson:"published"`
-	PublishedAt    *time.Time  `json:"published_at" bson:"published_at"`
-	PublishedScope string      `json:"published_scope" bson:"published_scope"`
-	Metafields     []Metafield `json:"metafields,omitempty" bson:"metafields"`
+	ID             int64      `json:"id" bson:"id"`
+	Handle         string     `json:"handle" bson:"handle"`
+	Title          string     `json:"title" bson:"title"`
+	UpdatedAt      *time.Time `json:"updated_at" bson:"updated_at"`
+	BodyHTML       string     `json:"body_html" bson:"body_html"`
+	SortOrder      string     `json:"sort_order" bson:"sort_order"`
+	TemplateSuffix string     `json:"template_suffix" bson:"template_suffix"`
+	Image          Image      `json:"image" bson:"image"`
+	Published      bool       `json:"published" bson:"published"`
+	PublishedAt    *time.Time `json:"published_at" bson:"published_at"`
+	PublishedScope string     `json:"published_scope" bson:"published_scope"`
+	//	Metafields     []Metafield `json:"metafields,omitempty" bson:"metafields"`
 }
 
 // CustomCollectionResource represents the result form the custom_collections/X.json endpoint
