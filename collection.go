@@ -24,6 +24,7 @@ type CollectionServiceOp struct {
 }
 
 // Collection represents a Shopify collection
+// https://shopify.dev/api/admin-rest/2022-10/resources/collection#get-collections-collection-id
 type Collection struct {
 	ID             int64      `json:"id" bson:"id"`
 	Handle         string     `json:"handle" bson:"handle"`
@@ -35,7 +36,7 @@ type Collection struct {
 	Image          Image      `json:"image" bson:"image"`
 	PublishedAt    *time.Time `json:"published_at" bson:"published_at"`
 	PublishedScope string     `json:"published_scope" bson:"published_scope"`
-	//	CollectionType string     `json:"collection_type" bson:"collection_type"`
+	CollectionType string     `json:"collection_type" bson:"collection_type"`
 }
 
 // Represents the result from the collections/X.json endpoint
