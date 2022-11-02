@@ -244,7 +244,7 @@ type LineItem struct {
 	Custom                     bool                  `json:"custom,omitempty" bson:"custom,omitempty"`
 
 	// only for fulfillment
-	FulfillmentLineItemID int64  `json:"fulfillment_line_item_id,omitempty" bson:"fulfillment_line_item_id,omitempty"`
+	FulfillmentLineItemID int64  `json:"fulfillment_line_item_id,omitempty" bson:"fulfillment_line_item_id,omitempty"` // order/updated; order/create 的webhook中没有返回该字段
 	Duties                []Duty `json:"duties,omitempty" bson:"duties,omitempty"`
 }
 
