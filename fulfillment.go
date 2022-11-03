@@ -58,10 +58,10 @@ type Fulfillment struct {
 	TrackingUrls               []string   `json:"tracking_urls,omitempty" bson:"tracking_urls,omitempty"`
 	Receipt                    Receipt    `json:"receipt,omitempty" bson:"receipt,omitempty"`
 	LineItems                  []LineItem `json:"line_items,omitempty" bson:"line_items,omitempty"`
-	NotifyCustomer             bool       `json:"notify_customer" bson:"notify_customer"`
+	NotifyCustomer             bool       `json:"notify_customer" bson:"notify_customer"` // webhook里面没有?  // @todo
 	Name                       string     `json:"name,omitempty" bson:"name,omitempty"`
 	OriginAddress              *Address   `json:"origin_address,omitempty" bson:"origin_address,omitempty"`
-	VariantInventoryManagement string     `json:"variant_inventory_management,omitempty" bson:"variant_inventory_management,omitempty"`
+	VariantInventoryManagement string     `json:"variant_inventory_management,omitempty" bson:"variant_inventory_management,omitempty"` // webhook里面没有? // @todo
 }
 
 // Receipt represents a Shopify receipt.
