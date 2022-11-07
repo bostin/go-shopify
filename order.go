@@ -135,18 +135,18 @@ type Order struct {
 	Test           bool            `json:"test,omitempty" bson:"test,omitempty"`
 	// BrowserIp              string           `json:"browser_ip,omitempty" bson:"browser_ip,omitempty"` // @todo
 	// BuyerAcceptsMarketing  bool             `json:"buyer_accepts_marketing,omitempty" bson:"buyer_accepts_marketing,omitempty"` // @todo
-	CancelReason  string         `json:"cancel_reason,omitempty" bson:"cancel_reason,omitempty"`
-	DiscountCodes []DiscountCode `json:"discount_codes,omitempty" bson:"discount_codes,omitempty"`
-	LineItems     []LineItem     `json:"line_items,omitempty" bson:"line_items,omitempty"`
-	// ShippingLines          []ShippingLines  `json:"shipping_lines,omitempty" bson:"shipping_lines,omitempty"` // @todo
-	Transactions     []Transaction `json:"transactions,omitempty" bson:"transactions,omitempty"`
-	AppID            int           `json:"app_id,omitempty" bson:"app_id,omitempty"`
-	CustomerLocale   string        `json:"customer_locale,omitempty" bson:"customer_locale,omitempty"`
-	LandingSite      string        `json:"landing_site,omitempty" bson:"landing_site,omitempty"`
-	ReferringSite    string        `json:"referring_site,omitempty" bson:"referring_site,omitempty"`
-	SourceName       string        `json:"source_name,omitempty" bson:"source_name,omitempty"`
-	SourceIdentifier string        `json:"source_identifier,omitempty" bson:"source_identifier,omitempty"`
-	SourceURL        string        `json:"source_url,omitempty" bson:"source_url,omitempty"`
+	CancelReason     string          `json:"cancel_reason,omitempty" bson:"cancel_reason,omitempty"`
+	DiscountCodes    []DiscountCode  `json:"discount_codes,omitempty" bson:"discount_codes,omitempty"`
+	LineItems        []LineItem      `json:"line_items,omitempty" bson:"line_items,omitempty"`
+	ShippingLines    []ShippingLines `json:"shipping_lines,omitempty" bson:"shipping_lines,omitempty"` // @todo
+	Transactions     []Transaction   `json:"transactions,omitempty" bson:"transactions,omitempty"`
+	AppID            int             `json:"app_id,omitempty" bson:"app_id,omitempty"`
+	CustomerLocale   string          `json:"customer_locale,omitempty" bson:"customer_locale,omitempty"`
+	LandingSite      string          `json:"landing_site,omitempty" bson:"landing_site,omitempty"`
+	ReferringSite    string          `json:"referring_site,omitempty" bson:"referring_site,omitempty"`
+	SourceName       string          `json:"source_name,omitempty" bson:"source_name,omitempty"`
+	SourceIdentifier string          `json:"source_identifier,omitempty" bson:"source_identifier,omitempty"`
+	SourceURL        string          `json:"source_url,omitempty" bson:"source_url,omitempty"`
 	// ClientDetails          *ClientDetails   `json:"client_details,omitempty" bson:"client_details,omitempty"` // @todo
 	Tags       string `json:"tags,omitempty" bson:"tags,omitempty"`
 	LocationId int64  `json:"location_id,omitempty" bson:"location_id,omitempty"`
@@ -356,19 +356,20 @@ type ShippingLine struct {
 }
 
 type ShippingLines struct {
-	ID                            int64            `json:"id,omitempty" bson:"id,omitempty"`
-	Title                         string           `json:"title,omitempty" bson:"title,omitempty"`
-	Price                         *decimal.Decimal `json:"price,omitempty" bson:"price,omitempty"`
-	PriceSet                      *AmountSet       `json:"price_set,omitempty" bson:"price_set,omitempty"`
-	Code                          string           `json:"code,omitempty" bson:"code,omitempty"`
-	Source                        string           `json:"source,omitempty" bson:"source,omitempty"`
-	Phone                         string           `json:"phone,omitempty" bson:"phone,omitempty"`
-	RequestedFulfillmentServiceID string           `json:"requested_fulfillment_service_id,omitempty" bson:"requested_fulfillment_service_id,omitempty"`
-	DeliveryCategory              string           `json:"delivery_category,omitempty" bson:"delivery_category,omitempty"`
-	CarrierIdentifier             string           `json:"carrier_identifier,omitempty" bson:"carrier_identifier,omitempty"`
-	TaxLines                      []TaxLine        `json:"tax_lines,omitempty" bson:"tax_lines,omitempty"`
-	DiscountedPrice               string           `json:"discounted_price,omitempty" bson:"discounted_price,omitempty"`
-	DiscountedPriceSet            *AmountSet       `json:"discounted_price_set,omitempty" bson:"discounted_price_set,omitempty"`
+	ID                            int64                 `json:"id,omitempty" bson:"id,omitempty"`
+	Title                         string                `json:"title,omitempty" bson:"title,omitempty"`
+	Price                         *decimal.Decimal      `json:"price,omitempty" bson:"price,omitempty"`
+	PriceSet                      *AmountSet            `json:"price_set,omitempty" bson:"price_set,omitempty"`
+	Code                          string                `json:"code,omitempty" bson:"code,omitempty"`
+	Source                        string                `json:"source,omitempty" bson:"source,omitempty"`
+	Phone                         string                `json:"phone,omitempty" bson:"phone,omitempty"`
+	RequestedFulfillmentServiceID string                `json:"requested_fulfillment_service_id,omitempty" bson:"requested_fulfillment_service_id,omitempty"`
+	DeliveryCategory              string                `json:"delivery_category,omitempty" bson:"delivery_category,omitempty"`
+	CarrierIdentifier             string                `json:"carrier_identifier,omitempty" bson:"carrier_identifier,omitempty"`
+	TaxLines                      []TaxLine             `json:"tax_lines,omitempty" bson:"tax_lines,omitempty"`
+	DiscountedPrice               string                `json:"discounted_price,omitempty" bson:"discounted_price,omitempty"`
+	DiscountedPriceSet            *AmountSet            `json:"discounted_price_set,omitempty" bson:"discounted_price_set,omitempty"`
+	DiscountAllocations           []DiscountAllocations `json:"discount_allocations,omitempty" bson:"discount_allocations,omitempty"`
 }
 
 // UnmarshalJSON custom unmarshaller for ShippingLines implemented to handle requested_fulfillment_service_id being
