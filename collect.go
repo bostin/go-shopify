@@ -8,9 +8,11 @@ import (
 const collectsBasePath = "collects"
 
 type CollectListOptions struct {
-	Fields  *string `json:"fields,omitempty" url:"fields,omitempty" bson:"fields,omitempty"`
-	Limit   *int    `json:"limit,omitempty" url:"limit,omitempty" bson:"limit,omitempty"`
-	SinceID *int64  `json:"since_id,omitempty" url:"since_id,omitempty" bson:"since_id,omitempty"`
+	Fields       *string `json:"fields,omitempty" url:"fields,omitempty" bson:"fields,omitempty"`
+	Limit        *int    `json:"limit,omitempty" url:"limit,omitempty" bson:"limit,omitempty"`
+	SinceID      *int64  `json:"since_id,omitempty" url:"since_id,omitempty" bson:"since_id,omitempty"`
+	ProductID    *string `json:"product_id,omitempty" url:"product_id,omitempty" bson:"product_id,omitempty"`
+	CollectionID *string `json:"collection_id,omitempty" url:"collection_id,omitempty" bson:"collection_id,omitempty"`
 }
 
 // CollectService is an interface for interfacing with the collect endpoints
