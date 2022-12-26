@@ -7,6 +7,12 @@ import (
 
 const collectsBasePath = "collects"
 
+type CollectCountOptions struct {
+	SinceID      *int64  `json:"since_id,omitempty" url:"since_id,omitempty" bson:"since_id,omitempty"`
+	ProductID    *string `json:"product_id,omitempty" url:"product_id,omitempty" bson:"product_id,omitempty"`
+	CollectionID *string `json:"collection_id,omitempty" url:"collection_id,omitempty" bson:"collection_id,omitempty"`
+}
+
 type CollectListOptions struct {
 	Fields       *string `json:"fields,omitempty" url:"fields,omitempty" bson:"fields,omitempty"`
 	Limit        *int    `json:"limit,omitempty" url:"limit,omitempty" bson:"limit,omitempty"`
